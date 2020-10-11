@@ -1,0 +1,286 @@
+nohup: ignoring input
+2020-09-11 11:09:36,305 reid_baseline INFO: Using 1 GPUS
+2020-09-11 11:09:36,305 reid_baseline INFO: Namespace(config_file='configs/softmax_triplet.yml', load_LRpart1_Optimizer_Path=None, load_LRpart1_Path=None, opts=[])
+2020-09-11 11:09:36,306 reid_baseline INFO: Loaded configuration file configs/softmax_triplet.yml
+2020-09-11 11:09:36,306 reid_baseline INFO: 
+MODEL:
+  PRETRAIN_PATH: '/export/home/dongshichao/.torch/models/resnet50-19c8e357.pth'
+
+
+INPUT:
+#  SIZE_TRAIN: [128, 64]
+  SIZE_TRAIN: [256, 128]
+#  SIZE_TRAIN: [360, 180]
+#  SIZE_TRAIN: [288, 144]
+#  SIZE_TEST: [288, 144]
+#  SIZE_TEST: [360, 180]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  PADDING: 10
+
+DATASETS:
+#   NAMES: ('cuhk03')
+#   NAMES: ('dukemtmc')
+  NAMES: ('market1501')
+#   NAMES: ('msmt17')
+DATALOADER:
+  SAMPLER: 'multiple_softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 320
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  IMS_PER_BATCH: 64
+
+  # STEPS: [40, 70]
+  STEPS: [40, 90]
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 40 
+  LOG_PERIOD: 100
+  EVAL_PERIOD: 40 
+
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: '/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth'
+
+OUTPUT_DIR: "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/songcy/BNNeck/ChannelSplit8_backup/market1501"
+
+2020-09-11 11:09:36,306 reid_baseline INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+  SAMPLER: multiple_softmax_triplet
+DATASETS:
+  NAMES: market1501
+INPUT:
+  PADDING: 10
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  PROB: 0.5
+  SIZE_TEST: [256, 128]
+  SIZE_TRAIN: [256, 128]
+MODEL:
+  DEVICE: cuda
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /export/home/dongshichao/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/songcy/BNNeck/ChannelSplit8_backup/market1501
+SOLVER:
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 40
+  EVAL_PERIOD: 40
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 100
+  MARGIN: 0.2
+  MAX_EPOCHS: 320
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (40, 90)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth
+=> Market1501 loaded
+Dataset statistics:
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   751 |    12936 |         6
+  query    |   750 |     3368 |         6
+  gallery  |   751 |    15913 |         6
+  ----------------------------------------
+2020-09-11 11:09:38,554 reid_baseline.train INFO: Start training
+/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/optim/lr_scheduler.py:122: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  "https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate", UserWarning)
+2020-09-11 11:10:38,280 reid_baseline.train INFO: Epoch[1] Iteration[100/186] Loss: 75.024, Acc: 0.005, Base Lr: 3.92e-05
+2020-09-11 11:11:20,263 reid_baseline.train INFO: Epoch 1 done. Time per batch: 93.944[s] Speed: 126.7[samples/s]
+2020-09-11 11:11:20,263 reid_baseline.train INFO: ----------
+2020-09-11 11:12:08,232 reid_baseline.train INFO: Epoch[2] Iteration[100/186] Loss: 62.802, Acc: 0.038, Base Lr: 7.49e-05
+2020-09-11 11:12:50,180 reid_baseline.train INFO: Epoch 2 done. Time per batch: 87.481[s] Speed: 136.1[samples/s]
+2020-09-11 11:12:50,181 reid_baseline.train INFO: ----------
+2020-09-11 11:13:37,319 reid_baseline.train INFO: Epoch[3] Iteration[100/186] Loss: 53.362, Acc: 0.076, Base Lr: 1.11e-04
+2020-09-11 11:14:20,132 reid_baseline.train INFO: Epoch 3 done. Time per batch: 87.523[s] Speed: 136.0[samples/s]
+2020-09-11 11:14:20,132 reid_baseline.train INFO: ----------
+2020-09-11 11:15:08,107 reid_baseline.train INFO: Epoch[4] Iteration[100/186] Loss: 40.707, Acc: 0.231, Base Lr: 1.46e-04
+2020-09-11 11:15:50,572 reid_baseline.train INFO: Epoch 4 done. Time per batch: 87.969[s] Speed: 135.3[samples/s]
+2020-09-11 11:15:50,573 reid_baseline.train INFO: ----------
+2020-09-11 11:16:38,346 reid_baseline.train INFO: Epoch[5] Iteration[100/186] Loss: 29.818, Acc: 0.416, Base Lr: 1.82e-04
+2020-09-11 11:17:20,857 reid_baseline.train INFO: Epoch 5 done. Time per batch: 87.710[s] Speed: 135.7[samples/s]
+2020-09-11 11:17:20,858 reid_baseline.train INFO: ----------
+2020-09-11 11:18:08,325 reid_baseline.train INFO: Epoch[6] Iteration[100/186] Loss: 23.129, Acc: 0.565, Base Lr: 2.17e-04
+2020-09-11 11:18:50,737 reid_baseline.train INFO: Epoch 6 done. Time per batch: 87.460[s] Speed: 136.1[samples/s]
+2020-09-11 11:18:50,738 reid_baseline.train INFO: ----------
+2020-09-11 11:19:38,535 reid_baseline.train INFO: Epoch[7] Iteration[100/186] Loss: 16.481, Acc: 0.706, Base Lr: 2.53e-04
+2020-09-11 11:20:20,841 reid_baseline.train INFO: Epoch 7 done. Time per batch: 87.848[s] Speed: 135.5[samples/s]
+2020-09-11 11:20:20,842 reid_baseline.train INFO: ----------
+2020-09-11 11:21:08,937 reid_baseline.train INFO: Epoch[8] Iteration[100/186] Loss: 11.862, Acc: 0.772, Base Lr: 2.89e-04
+2020-09-11 11:21:51,486 reid_baseline.train INFO: Epoch 8 done. Time per batch: 88.210[s] Speed: 135.0[samples/s]
+2020-09-11 11:21:51,487 reid_baseline.train INFO: ----------
+2020-09-11 11:22:38,936 reid_baseline.train INFO: Epoch[9] Iteration[100/186] Loss: 9.324, Acc: 0.827, Base Lr: 3.24e-04
+2020-09-11 11:23:20,981 reid_baseline.train INFO: Epoch 9 done. Time per batch: 87.179[s] Speed: 136.5[samples/s]
+2020-09-11 11:23:20,982 reid_baseline.train INFO: ----------
+2020-09-11 11:24:08,804 reid_baseline.train INFO: Epoch[10] Iteration[100/186] Loss: 7.520, Acc: 0.865, Base Lr: 3.60e-04
+2020-09-11 11:24:51,222 reid_baseline.train INFO: Epoch 10 done. Time per batch: 87.788[s] Speed: 135.6[samples/s]
+2020-09-11 11:24:51,223 reid_baseline.train INFO: ----------
+2020-09-11 11:25:39,294 reid_baseline.train INFO: Epoch[11] Iteration[100/186] Loss: 5.882, Acc: 0.888, Base Lr: 3.60e-04
+2020-09-11 11:26:21,670 reid_baseline.train INFO: Epoch 11 done. Time per batch: 88.007[s] Speed: 135.3[samples/s]
+2020-09-11 11:26:21,671 reid_baseline.train INFO: ----------
+2020-09-11 11:27:09,166 reid_baseline.train INFO: Epoch[12] Iteration[100/186] Loss: 6.057, Acc: 0.903, Base Lr: 3.60e-04
+2020-09-11 11:27:51,612 reid_baseline.train INFO: Epoch 12 done. Time per batch: 87.576[s] Speed: 135.9[samples/s]
+2020-09-11 11:27:51,612 reid_baseline.train INFO: ----------
+2020-09-11 11:28:39,421 reid_baseline.train INFO: Epoch[13] Iteration[100/186] Loss: 5.316, Acc: 0.916, Base Lr: 3.60e-04
+2020-09-11 11:29:21,811 reid_baseline.train INFO: Epoch 13 done. Time per batch: 87.761[s] Speed: 135.6[samples/s]
+2020-09-11 11:29:21,812 reid_baseline.train INFO: ----------
+2020-09-11 11:30:09,015 reid_baseline.train INFO: Epoch[14] Iteration[100/186] Loss: 4.036, Acc: 0.938, Base Lr: 3.60e-04
+2020-09-11 11:30:52,089 reid_baseline.train INFO: Epoch 14 done. Time per batch: 87.829[s] Speed: 135.5[samples/s]
+2020-09-11 11:30:52,090 reid_baseline.train INFO: ----------
+2020-09-11 11:31:39,504 reid_baseline.train INFO: Epoch[15] Iteration[100/186] Loss: 3.776, Acc: 0.941, Base Lr: 3.60e-04
+2020-09-11 11:32:21,847 reid_baseline.train INFO: Epoch 15 done. Time per batch: 87.359[s] Speed: 136.3[samples/s]
+2020-09-11 11:32:21,848 reid_baseline.train INFO: ----------
+2020-09-11 11:33:09,766 reid_baseline.train INFO: Epoch[16] Iteration[100/186] Loss: 3.044, Acc: 0.955, Base Lr: 3.60e-04
+2020-09-11 11:33:52,161 reid_baseline.train INFO: Epoch 16 done. Time per batch: 87.857[s] Speed: 135.5[samples/s]
+2020-09-11 11:33:52,162 reid_baseline.train INFO: ----------
+2020-09-11 11:34:39,243 reid_baseline.train INFO: Epoch[17] Iteration[100/186] Loss: 2.904, Acc: 0.957, Base Lr: 3.60e-04
+2020-09-11 11:35:22,226 reid_baseline.train INFO: Epoch 17 done. Time per batch: 87.554[s] Speed: 136.0[samples/s]
+2020-09-11 11:35:22,227 reid_baseline.train INFO: ----------
+2020-09-11 11:36:09,386 reid_baseline.train INFO: Epoch[18] Iteration[100/186] Loss: 2.433, Acc: 0.968, Base Lr: 3.60e-04
+2020-09-11 11:36:52,026 reid_baseline.train INFO: Epoch 18 done. Time per batch: 87.181[s] Speed: 136.5[samples/s]
+2020-09-11 11:36:52,027 reid_baseline.train INFO: ----------
+2020-09-11 11:37:39,878 reid_baseline.train INFO: Epoch[19] Iteration[100/186] Loss: 2.403, Acc: 0.962, Base Lr: 3.60e-04
+2020-09-11 11:38:22,244 reid_baseline.train INFO: Epoch 19 done. Time per batch: 87.836[s] Speed: 135.5[samples/s]
+2020-09-11 11:38:22,245 reid_baseline.train INFO: ----------
+2020-09-11 11:39:09,318 reid_baseline.train INFO: Epoch[20] Iteration[100/186] Loss: 2.033, Acc: 0.974, Base Lr: 3.60e-04
+2020-09-11 11:39:52,215 reid_baseline.train INFO: Epoch 20 done. Time per batch: 87.393[s] Speed: 136.2[samples/s]
+2020-09-11 11:39:52,215 reid_baseline.train INFO: ----------
+2020-09-11 11:40:39,862 reid_baseline.train INFO: Epoch[21] Iteration[100/186] Loss: 2.081, Acc: 0.970, Base Lr: 3.60e-04
+2020-09-11 11:41:22,917 reid_baseline.train INFO: Epoch 21 done. Time per batch: 88.079[s] Speed: 135.2[samples/s]
+2020-09-11 11:41:22,918 reid_baseline.train INFO: ----------
+2020-09-11 11:42:11,193 reid_baseline.train INFO: Epoch[22] Iteration[100/186] Loss: 1.960, Acc: 0.973, Base Lr: 3.60e-04
+2020-09-11 11:42:53,849 reid_baseline.train INFO: Epoch 22 done. Time per batch: 88.431[s] Speed: 134.6[samples/s]
+2020-09-11 11:42:53,850 reid_baseline.train INFO: ----------
+2020-09-11 11:43:41,156 reid_baseline.train INFO: Epoch[23] Iteration[100/186] Loss: 2.011, Acc: 0.980, Base Lr: 3.60e-04
+2020-09-11 11:44:23,776 reid_baseline.train INFO: Epoch 23 done. Time per batch: 87.438[s] Speed: 136.1[samples/s]
+2020-09-11 11:44:23,777 reid_baseline.train INFO: ----------
+2020-09-11 11:45:11,646 reid_baseline.train INFO: Epoch[24] Iteration[100/186] Loss: 1.471, Acc: 0.979, Base Lr: 3.60e-04
+2020-09-11 11:45:54,494 reid_baseline.train INFO: Epoch 24 done. Time per batch: 88.016[s] Speed: 135.2[samples/s]
+2020-09-11 11:45:54,494 reid_baseline.train INFO: ----------
+2020-09-11 11:46:42,391 reid_baseline.train INFO: Epoch[25] Iteration[100/186] Loss: 1.605, Acc: 0.981, Base Lr: 3.60e-04
+2020-09-11 11:47:25,127 reid_baseline.train INFO: Epoch 25 done. Time per batch: 88.124[s] Speed: 135.1[samples/s]
+2020-09-11 11:47:25,128 reid_baseline.train INFO: ----------
+2020-09-11 11:48:12,553 reid_baseline.train INFO: Epoch[26] Iteration[100/186] Loss: 1.522, Acc: 0.980, Base Lr: 3.60e-04
+2020-09-11 11:48:55,309 reid_baseline.train INFO: Epoch 26 done. Time per batch: 87.761[s] Speed: 135.6[samples/s]
+2020-09-11 11:48:55,309 reid_baseline.train INFO: ----------
+2020-09-11 11:49:43,548 reid_baseline.train INFO: Epoch[27] Iteration[100/186] Loss: 1.459, Acc: 0.980, Base Lr: 3.60e-04
+2020-09-11 11:50:26,361 reid_baseline.train INFO: Epoch 27 done. Time per batch: 88.387[s] Speed: 134.7[samples/s]
+2020-09-11 11:50:26,362 reid_baseline.train INFO: ----------
+2020-09-11 11:51:14,236 reid_baseline.train INFO: Epoch[28] Iteration[100/186] Loss: 1.760, Acc: 0.977, Base Lr: 3.60e-04
+2020-09-11 11:51:56,662 reid_baseline.train INFO: Epoch 28 done. Time per batch: 87.795[s] Speed: 135.6[samples/s]
+2020-09-11 11:51:56,662 reid_baseline.train INFO: ----------
+2020-09-11 11:52:43,671 reid_baseline.train INFO: Epoch[29] Iteration[100/186] Loss: 1.392, Acc: 0.983, Base Lr: 3.60e-04
+2020-09-11 11:53:26,312 reid_baseline.train INFO: Epoch 29 done. Time per batch: 87.228[s] Speed: 136.5[samples/s]
+2020-09-11 11:53:26,312 reid_baseline.train INFO: ----------
+2020-09-11 11:54:14,173 reid_baseline.train INFO: Epoch[30] Iteration[100/186] Loss: 1.384, Acc: 0.979, Base Lr: 3.60e-04
+2020-09-11 11:54:56,098 reid_baseline.train INFO: Epoch 30 done. Time per batch: 87.587[s] Speed: 135.9[samples/s]
+2020-09-11 11:54:56,098 reid_baseline.train INFO: ----------
+2020-09-11 11:55:43,884 reid_baseline.train INFO: Epoch[31] Iteration[100/186] Loss: 1.199, Acc: 0.982, Base Lr: 3.60e-04
+2020-09-11 11:56:26,177 reid_baseline.train INFO: Epoch 31 done. Time per batch: 87.649[s] Speed: 135.8[samples/s]
+2020-09-11 11:56:26,177 reid_baseline.train INFO: ----------
+2020-09-11 11:57:12,919 reid_baseline.train INFO: Epoch[32] Iteration[100/186] Loss: 1.533, Acc: 0.975, Base Lr: 3.60e-04
+2020-09-11 11:57:55,559 reid_baseline.train INFO: Epoch 32 done. Time per batch: 86.977[s] Speed: 136.9[samples/s]
+2020-09-11 11:57:55,560 reid_baseline.train INFO: ----------
+2020-09-11 11:58:45,095 reid_baseline.train INFO: Epoch[33] Iteration[100/186] Loss: 1.219, Acc: 0.984, Base Lr: 3.60e-04
+2020-09-11 11:59:26,154 reid_baseline.train INFO: Epoch 33 done. Time per batch: 88.089[s] Speed: 135.1[samples/s]
+2020-09-11 11:59:26,154 reid_baseline.train INFO: ----------
+2020-09-11 12:00:14,702 reid_baseline.train INFO: Epoch[34] Iteration[100/186] Loss: 1.381, Acc: 0.985, Base Lr: 3.60e-04
+2020-09-11 12:00:56,111 reid_baseline.train INFO: Epoch 34 done. Time per batch: 87.674[s] Speed: 135.8[samples/s]
+2020-09-11 12:00:56,112 reid_baseline.train INFO: ----------
+2020-09-11 12:01:44,816 reid_baseline.train INFO: Epoch[35] Iteration[100/186] Loss: 1.174, Acc: 0.986, Base Lr: 3.60e-04
+2020-09-11 12:02:25,726 reid_baseline.train INFO: Epoch 35 done. Time per batch: 87.168[s] Speed: 136.6[samples/s]
+2020-09-11 12:02:25,727 reid_baseline.train INFO: ----------
+2020-09-11 12:03:14,819 reid_baseline.train INFO: Epoch[36] Iteration[100/186] Loss: 1.321, Acc: 0.983, Base Lr: 3.60e-04
+2020-09-11 12:03:55,573 reid_baseline.train INFO: Epoch 36 done. Time per batch: 87.501[s] Speed: 136.0[samples/s]
+2020-09-11 12:03:55,574 reid_baseline.train INFO: ----------
+2020-09-11 12:04:44,312 reid_baseline.train INFO: Epoch[37] Iteration[100/186] Loss: 1.313, Acc: 0.983, Base Lr: 3.60e-04
+2020-09-11 12:05:25,844 reid_baseline.train INFO: Epoch 37 done. Time per batch: 87.877[s] Speed: 135.5[samples/s]
+2020-09-11 12:05:25,844 reid_baseline.train INFO: ----------
+2020-09-11 12:06:14,519 reid_baseline.train INFO: Epoch[38] Iteration[100/186] Loss: 1.112, Acc: 0.985, Base Lr: 3.60e-04
+2020-09-11 12:06:55,452 reid_baseline.train INFO: Epoch 38 done. Time per batch: 87.155[s] Speed: 136.6[samples/s]
+2020-09-11 12:06:55,453 reid_baseline.train INFO: ----------
+2020-09-11 12:07:45,127 reid_baseline.train INFO: Epoch[39] Iteration[100/186] Loss: 1.534, Acc: 0.978, Base Lr: 3.60e-04
+2020-09-11 12:08:25,985 reid_baseline.train INFO: Epoch 39 done. Time per batch: 87.995[s] Speed: 135.3[samples/s]
+2020-09-11 12:08:25,986 reid_baseline.train INFO: ----------
+2020-09-11 12:09:14,819 reid_baseline.train INFO: Epoch[40] Iteration[100/186] Loss: 1.008, Acc: 0.988, Base Lr: 3.60e-05
+2020-09-11 12:09:56,264 reid_baseline.train INFO: Epoch 40 done. Time per batch: 87.802[s] Speed: 135.6[samples/s]
+2020-09-11 12:09:56,265 reid_baseline.train INFO: ----------
+using cosine
+2020-09-11 12:13:06,312 reid_baseline.train INFO: Validation Results - Epoch: 40
+2020-09-11 12:13:06,313 reid_baseline.train INFO: mAP: 81.3%
+2020-09-11 12:13:06,313 reid_baseline.train INFO: CMC curve, Rank-1  :92.5%
+2020-09-11 12:13:06,313 reid_baseline.train INFO: CMC curve, Rank-5  :97.5%
+2020-09-11 12:13:06,313 reid_baseline.train INFO: CMC curve, Rank-10 :98.5%
+Current run is terminating due to exception: CUDA out of memory. Tried to allocate 64.00 MiB (GPU 0; 10.92 GiB total capacity; 9.88 GiB already allocated; 15.00 MiB free; 10.33 GiB reserved in total by PyTorch).
+Engine run is terminating due to exception: CUDA out of memory. Tried to allocate 64.00 MiB (GPU 0; 10.92 GiB total capacity; 9.88 GiB already allocated; 15.00 MiB free; 10.33 GiB reserved in total by PyTorch).
+Traceback (most recent call last):
+  File "tools/train.py", line 119, in <module>
+    main()
+  File "tools/train.py", line 115, in main
+    train(cfg, num_gpus, args.load_LRpart1_Path, args.load_LRpart1_Optimizer_Path)
+  File "tools/train.py", line 63, in train
+    num_gpus
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/engine/trainer.py", line 193, in do_train
+    trainer.run(train_loader, max_epochs=epochs)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 658, in run
+    return self._internal_run()
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 729, in _internal_run
+    self._handle_exception(e)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 437, in _handle_exception
+    raise e
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 697, in _internal_run
+    time_taken = self._run_once_on_dataset()
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 795, in _run_once_on_dataset
+    self._handle_exception(e)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 437, in _handle_exception
+    raise e
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 778, in _run_once_on_dataset
+    self.state.output = self._process_function(self, self.state.batch)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/engine/trainer.py", line 52, in _update
+    score, feat = model(img, target)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/modeling/new_channel_8.py", line 193, in forward
+    chan_1, chan_2, chan_3, chan_4, chan_5, chan_6, chan_7, chan_8 = self.channel_extra(reid_feat)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/modeling/new_channel_8.py", line 85, in forward
+    x1, x2, x3, x4, x5, x6, x7, x8  = self.extra_layer(x)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/container.py", line 100, in forward
+    input = module(input)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/modeling/backbones/resnet_cs8.py", line 241, in forward
+    out_7 = self.relu(out_7)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/activation.py", line 559, in forward
+    return F.leaky_relu(input, self.negative_slope, self.inplace)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/functional.py", line 1063, in leaky_relu
+    result = torch._C._nn.leaky_relu(input, negative_slope)
+RuntimeError: CUDA out of memory. Tried to allocate 64.00 MiB (GPU 0; 10.92 GiB total capacity; 9.88 GiB already allocated; 15.00 MiB free; 10.33 GiB reserved in total by PyTorch)

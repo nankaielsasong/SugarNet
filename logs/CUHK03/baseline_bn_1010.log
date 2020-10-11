@@ -1,0 +1,800 @@
+nohup: ignoring input
+2020-10-10 20:04:18,366 reid_baseline INFO: Using 1 GPUS
+2020-10-10 20:04:18,366 reid_baseline INFO: Namespace(config_file='configs/softmax_triplet.yml', load_LRpart1_Optimizer_Path=None, load_LRpart1_Path=None, opts=[])
+2020-10-10 20:04:18,366 reid_baseline INFO: Loaded configuration file configs/softmax_triplet.yml
+2020-10-10 20:04:18,366 reid_baseline INFO: 
+MODEL:
+  PRETRAIN_PATH: '/export/home/dongshichao/.torch/models/resnet50-19c8e357.pth'
+
+
+INPUT:
+#  SIZE_TRAIN: [128, 64]
+  SIZE_TRAIN: [256, 128]
+#  SIZE_TRAIN: [360, 180]
+#  SIZE_TRAIN: [288, 144]
+#  SIZE_TEST: [288, 144]
+#  SIZE_TEST: [360, 180]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  PADDING: 10
+
+DATASETS:
+   NAMES: ('cuhk03')
+#   NAMES: ('dukemtmc')
+#   NAMES: ('market1501')
+#   NAMES: ('msmt17')
+DATALOADER:
+  SAMPLER: 'multiple_softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 320
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  IMS_PER_BATCH: 64
+
+  # STEPS: [40, 70]
+  STEPS: [40, 90]
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 40 
+  LOG_PERIOD: 100
+  EVAL_PERIOD: 40 
+
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: '/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth'
+# OUTPUT_DIR: "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/songcy/BNNeck/ChannelSplit6/gcb_ch/market1501"
+OUTPUT_DIR: "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/result/CUHK03/baseline_bn_1010"
+
+2020-10-10 20:04:18,367 reid_baseline INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+  SAMPLER: multiple_softmax_triplet
+DATASETS:
+  NAMES: cuhk03
+INPUT:
+  PADDING: 10
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  PROB: 0.5
+  SIZE_TEST: [256, 128]
+  SIZE_TRAIN: [256, 128]
+MODEL:
+  DEVICE: cuda
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /export/home/dongshichao/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/result/CUHK03/baseline_bn_1010
+SOLVER:
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 40
+  EVAL_PERIOD: 40
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 100
+  MARGIN: 0.2
+  MAX_EPOCHS: 320
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (40, 90)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth
+Note: if root path is changed, the previously generated json files need to be re-generated (delete them first)
+Split index = 0
+=> CUHK03 (labeled) loaded
+Dataset statistics:
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   767 |     7368 |         2
+  query    |   700 |     1400 |         2
+  gallery  |   700 |     5328 |         2
+  ----------------------------------------
+2020-10-10 20:04:19,245 reid_baseline.train INFO: Start training
+/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/optim/lr_scheduler.py:122: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  "https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate", UserWarning)
+2020-10-10 20:04:52,227 reid_baseline.train INFO: Epoch 1 done. Time per batch: 28.932[s] Speed: 207.9[samples/s]
+2020-10-10 20:04:52,228 reid_baseline.train INFO: ----------
+2020-10-10 20:05:19,629 reid_baseline.train INFO: Epoch 2 done. Time per batch: 24.904[s] Speed: 241.6[samples/s]
+2020-10-10 20:05:19,629 reid_baseline.train INFO: ----------
+2020-10-10 20:05:46,275 reid_baseline.train INFO: Epoch 3 done. Time per batch: 24.950[s] Speed: 241.1[samples/s]
+2020-10-10 20:05:46,276 reid_baseline.train INFO: ----------
+2020-10-10 20:06:13,104 reid_baseline.train INFO: Epoch 4 done. Time per batch: 25.039[s] Speed: 240.3[samples/s]
+2020-10-10 20:06:13,105 reid_baseline.train INFO: ----------
+2020-10-10 20:06:40,124 reid_baseline.train INFO: Epoch 5 done. Time per batch: 25.221[s] Speed: 238.5[samples/s]
+2020-10-10 20:06:40,124 reid_baseline.train INFO: ----------
+2020-10-10 20:07:07,860 reid_baseline.train INFO: Epoch 6 done. Time per batch: 25.977[s] Speed: 231.6[samples/s]
+2020-10-10 20:07:07,861 reid_baseline.train INFO: ----------
+2020-10-10 20:07:36,781 reid_baseline.train INFO: Epoch 7 done. Time per batch: 27.333[s] Speed: 220.1[samples/s]
+2020-10-10 20:07:36,781 reid_baseline.train INFO: ----------
+2020-10-10 20:08:07,563 reid_baseline.train INFO: Epoch 8 done. Time per batch: 28.978[s] Speed: 207.6[samples/s]
+2020-10-10 20:08:07,563 reid_baseline.train INFO: ----------
+2020-10-10 20:08:40,379 reid_baseline.train INFO: Epoch 9 done. Time per batch: 30.953[s] Speed: 194.4[samples/s]
+2020-10-10 20:08:40,380 reid_baseline.train INFO: ----------
+2020-10-10 20:09:13,604 reid_baseline.train INFO: Epoch 10 done. Time per batch: 31.581[s] Speed: 190.5[samples/s]
+2020-10-10 20:09:13,604 reid_baseline.train INFO: ----------
+2020-10-10 20:09:48,541 reid_baseline.train INFO: Epoch 11 done. Time per batch: 33.190[s] Speed: 181.3[samples/s]
+2020-10-10 20:09:48,542 reid_baseline.train INFO: ----------
+2020-10-10 20:10:23,961 reid_baseline.train INFO: Epoch 12 done. Time per batch: 33.747[s] Speed: 178.3[samples/s]
+2020-10-10 20:10:23,961 reid_baseline.train INFO: ----------
+2020-10-10 20:10:59,191 reid_baseline.train INFO: Epoch 13 done. Time per batch: 33.400[s] Speed: 180.1[samples/s]
+2020-10-10 20:10:59,192 reid_baseline.train INFO: ----------
+2020-10-10 20:11:35,656 reid_baseline.train INFO: Epoch 14 done. Time per batch: 34.587[s] Speed: 173.9[samples/s]
+2020-10-10 20:11:35,656 reid_baseline.train INFO: ----------
+2020-10-10 20:12:10,123 reid_baseline.train INFO: Epoch 15 done. Time per batch: 32.903[s] Speed: 182.8[samples/s]
+2020-10-10 20:12:10,123 reid_baseline.train INFO: ----------
+2020-10-10 20:12:44,141 reid_baseline.train INFO: Epoch 16 done. Time per batch: 32.154[s] Speed: 187.1[samples/s]
+2020-10-10 20:12:44,141 reid_baseline.train INFO: ----------
+2020-10-10 20:13:17,919 reid_baseline.train INFO: Epoch 17 done. Time per batch: 32.068[s] Speed: 187.6[samples/s]
+2020-10-10 20:13:17,919 reid_baseline.train INFO: ----------
+2020-10-10 20:13:52,269 reid_baseline.train INFO: Epoch 18 done. Time per batch: 32.533[s] Speed: 184.9[samples/s]
+2020-10-10 20:13:52,269 reid_baseline.train INFO: ----------
+2020-10-10 20:14:26,944 reid_baseline.train INFO: Epoch 19 done. Time per batch: 32.888[s] Speed: 182.9[samples/s]
+2020-10-10 20:14:26,944 reid_baseline.train INFO: ----------
+2020-10-10 20:15:00,941 reid_baseline.train INFO: Epoch 20 done. Time per batch: 32.276[s] Speed: 186.4[samples/s]
+2020-10-10 20:15:00,942 reid_baseline.train INFO: ----------
+2020-10-10 20:15:34,612 reid_baseline.train INFO: Epoch 21 done. Time per batch: 31.909[s] Speed: 188.5[samples/s]
+2020-10-10 20:15:34,612 reid_baseline.train INFO: ----------
+2020-10-10 20:16:09,242 reid_baseline.train INFO: Epoch 22 done. Time per batch: 32.834[s] Speed: 183.2[samples/s]
+2020-10-10 20:16:09,243 reid_baseline.train INFO: ----------
+2020-10-10 20:16:43,306 reid_baseline.train INFO: Epoch 23 done. Time per batch: 32.260[s] Speed: 186.5[samples/s]
+2020-10-10 20:16:43,306 reid_baseline.train INFO: ----------
+2020-10-10 20:17:16,992 reid_baseline.train INFO: Epoch 24 done. Time per batch: 31.883[s] Speed: 188.7[samples/s]
+2020-10-10 20:17:16,992 reid_baseline.train INFO: ----------
+2020-10-10 20:17:51,083 reid_baseline.train INFO: Epoch 25 done. Time per batch: 32.337[s] Speed: 186.0[samples/s]
+2020-10-10 20:17:51,083 reid_baseline.train INFO: ----------
+2020-10-10 20:18:24,634 reid_baseline.train INFO: Epoch 26 done. Time per batch: 31.780[s] Speed: 189.3[samples/s]
+2020-10-10 20:18:24,635 reid_baseline.train INFO: ----------
+2020-10-10 20:18:58,455 reid_baseline.train INFO: Epoch 27 done. Time per batch: 32.065[s] Speed: 187.6[samples/s]
+2020-10-10 20:18:58,455 reid_baseline.train INFO: ----------
+2020-10-10 20:19:31,557 reid_baseline.train INFO: Epoch 28 done. Time per batch: 31.251[s] Speed: 192.5[samples/s]
+2020-10-10 20:19:31,557 reid_baseline.train INFO: ----------
+2020-10-10 20:20:04,677 reid_baseline.train INFO: Epoch 29 done. Time per batch: 31.308[s] Speed: 192.2[samples/s]
+2020-10-10 20:20:04,678 reid_baseline.train INFO: ----------
+2020-10-10 20:20:37,833 reid_baseline.train INFO: Epoch 30 done. Time per batch: 31.422[s] Speed: 191.5[samples/s]
+2020-10-10 20:20:37,834 reid_baseline.train INFO: ----------
+2020-10-10 20:21:10,137 reid_baseline.train INFO: Epoch 31 done. Time per batch: 30.582[s] Speed: 196.7[samples/s]
+2020-10-10 20:21:10,138 reid_baseline.train INFO: ----------
+2020-10-10 20:21:43,427 reid_baseline.train INFO: Epoch 32 done. Time per batch: 31.496[s] Speed: 191.0[samples/s]
+2020-10-10 20:21:43,427 reid_baseline.train INFO: ----------
+2020-10-10 20:22:15,814 reid_baseline.train INFO: Epoch 33 done. Time per batch: 30.640[s] Speed: 196.3[samples/s]
+2020-10-10 20:22:15,814 reid_baseline.train INFO: ----------
+2020-10-10 20:22:50,051 reid_baseline.train INFO: Epoch 34 done. Time per batch: 32.456[s] Speed: 185.4[samples/s]
+2020-10-10 20:22:50,052 reid_baseline.train INFO: ----------
+2020-10-10 20:23:22,959 reid_baseline.train INFO: Epoch 35 done. Time per batch: 31.049[s] Speed: 193.8[samples/s]
+2020-10-10 20:23:22,960 reid_baseline.train INFO: ----------
+2020-10-10 20:23:55,915 reid_baseline.train INFO: Epoch 36 done. Time per batch: 31.172[s] Speed: 193.0[samples/s]
+2020-10-10 20:23:55,916 reid_baseline.train INFO: ----------
+2020-10-10 20:24:29,528 reid_baseline.train INFO: Epoch 37 done. Time per batch: 31.893[s] Speed: 188.6[samples/s]
+2020-10-10 20:24:29,528 reid_baseline.train INFO: ----------
+2020-10-10 20:25:03,112 reid_baseline.train INFO: Epoch 38 done. Time per batch: 31.776[s] Speed: 189.3[samples/s]
+2020-10-10 20:25:03,112 reid_baseline.train INFO: ----------
+2020-10-10 20:25:36,727 reid_baseline.train INFO: Epoch 39 done. Time per batch: 31.791[s] Speed: 189.2[samples/s]
+2020-10-10 20:25:36,728 reid_baseline.train INFO: ----------
+2020-10-10 20:26:10,718 reid_baseline.train INFO: Epoch 40 done. Time per batch: 31.974[s] Speed: 188.2[samples/s]
+2020-10-10 20:26:10,718 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 20:26:46,595 reid_baseline.train INFO: Validation Results - Epoch: 40
+2020-10-10 20:26:46,596 reid_baseline.train INFO: mAP: 53.9%
+2020-10-10 20:26:46,597 reid_baseline.train INFO: CMC curve, Rank-1  :55.6%
+2020-10-10 20:26:46,597 reid_baseline.train INFO: CMC curve, Rank-5  :77.0%
+2020-10-10 20:26:46,597 reid_baseline.train INFO: CMC curve, Rank-10 :84.6%
+2020-10-10 20:27:15,796 reid_baseline.train INFO: Epoch 41 done. Time per batch: 27.552[s] Speed: 218.3[samples/s]
+2020-10-10 20:27:15,796 reid_baseline.train INFO: ----------
+2020-10-10 20:27:46,229 reid_baseline.train INFO: Epoch 42 done. Time per batch: 28.750[s] Speed: 209.3[samples/s]
+2020-10-10 20:27:46,230 reid_baseline.train INFO: ----------
+2020-10-10 20:28:17,897 reid_baseline.train INFO: Epoch 43 done. Time per batch: 29.855[s] Speed: 201.5[samples/s]
+2020-10-10 20:28:17,898 reid_baseline.train INFO: ----------
+2020-10-10 20:28:51,282 reid_baseline.train INFO: Epoch 44 done. Time per batch: 31.675[s] Speed: 189.9[samples/s]
+2020-10-10 20:28:51,282 reid_baseline.train INFO: ----------
+2020-10-10 20:29:24,498 reid_baseline.train INFO: Epoch 45 done. Time per batch: 31.564[s] Speed: 190.6[samples/s]
+2020-10-10 20:29:24,498 reid_baseline.train INFO: ----------
+2020-10-10 20:29:58,197 reid_baseline.train INFO: Epoch 46 done. Time per batch: 32.131[s] Speed: 187.2[samples/s]
+2020-10-10 20:29:58,198 reid_baseline.train INFO: ----------
+2020-10-10 20:30:32,574 reid_baseline.train INFO: Epoch 47 done. Time per batch: 32.571[s] Speed: 184.7[samples/s]
+2020-10-10 20:30:32,574 reid_baseline.train INFO: ----------
+2020-10-10 20:31:06,526 reid_baseline.train INFO: Epoch 48 done. Time per batch: 32.106[s] Speed: 187.4[samples/s]
+2020-10-10 20:31:06,526 reid_baseline.train INFO: ----------
+2020-10-10 20:31:39,801 reid_baseline.train INFO: Epoch 49 done. Time per batch: 31.531[s] Speed: 190.8[samples/s]
+2020-10-10 20:31:39,802 reid_baseline.train INFO: ----------
+2020-10-10 20:32:13,180 reid_baseline.train INFO: Epoch 50 done. Time per batch: 31.652[s] Speed: 190.1[samples/s]
+2020-10-10 20:32:13,180 reid_baseline.train INFO: ----------
+2020-10-10 20:32:46,625 reid_baseline.train INFO: Epoch 51 done. Time per batch: 31.620[s] Speed: 190.3[samples/s]
+2020-10-10 20:32:46,626 reid_baseline.train INFO: ----------
+2020-10-10 20:33:20,138 reid_baseline.train INFO: Epoch 52 done. Time per batch: 31.725[s] Speed: 189.6[samples/s]
+2020-10-10 20:33:20,138 reid_baseline.train INFO: ----------
+2020-10-10 20:33:53,516 reid_baseline.train INFO: Epoch 53 done. Time per batch: 31.477[s] Speed: 191.1[samples/s]
+2020-10-10 20:33:53,516 reid_baseline.train INFO: ----------
+2020-10-10 20:34:27,581 reid_baseline.train INFO: Epoch 54 done. Time per batch: 32.392[s] Speed: 185.7[samples/s]
+2020-10-10 20:34:27,581 reid_baseline.train INFO: ----------
+2020-10-10 20:35:01,195 reid_baseline.train INFO: Epoch 55 done. Time per batch: 31.962[s] Speed: 188.2[samples/s]
+2020-10-10 20:35:01,195 reid_baseline.train INFO: ----------
+2020-10-10 20:35:35,164 reid_baseline.train INFO: Epoch 56 done. Time per batch: 32.141[s] Speed: 187.2[samples/s]
+2020-10-10 20:35:35,164 reid_baseline.train INFO: ----------
+2020-10-10 20:36:08,492 reid_baseline.train INFO: Epoch 57 done. Time per batch: 31.495[s] Speed: 191.0[samples/s]
+2020-10-10 20:36:08,492 reid_baseline.train INFO: ----------
+2020-10-10 20:36:42,982 reid_baseline.train INFO: Epoch 58 done. Time per batch: 32.739[s] Speed: 183.8[samples/s]
+2020-10-10 20:36:42,982 reid_baseline.train INFO: ----------
+2020-10-10 20:37:15,535 reid_baseline.train INFO: Epoch 59 done. Time per batch: 30.799[s] Speed: 195.3[samples/s]
+2020-10-10 20:37:15,535 reid_baseline.train INFO: ----------
+2020-10-10 20:37:49,034 reid_baseline.train INFO: Epoch 60 done. Time per batch: 31.731[s] Speed: 189.6[samples/s]
+2020-10-10 20:37:49,035 reid_baseline.train INFO: ----------
+2020-10-10 20:38:23,649 reid_baseline.train INFO: Epoch 61 done. Time per batch: 32.813[s] Speed: 183.3[samples/s]
+2020-10-10 20:38:23,650 reid_baseline.train INFO: ----------
+2020-10-10 20:38:56,693 reid_baseline.train INFO: Epoch 62 done. Time per batch: 31.265[s] Speed: 192.4[samples/s]
+2020-10-10 20:38:56,693 reid_baseline.train INFO: ----------
+2020-10-10 20:39:31,124 reid_baseline.train INFO: Epoch 63 done. Time per batch: 32.720[s] Speed: 183.9[samples/s]
+2020-10-10 20:39:31,125 reid_baseline.train INFO: ----------
+2020-10-10 20:40:04,522 reid_baseline.train INFO: Epoch 64 done. Time per batch: 31.545[s] Speed: 190.7[samples/s]
+2020-10-10 20:40:04,523 reid_baseline.train INFO: ----------
+2020-10-10 20:40:38,028 reid_baseline.train INFO: Epoch 65 done. Time per batch: 31.734[s] Speed: 189.6[samples/s]
+2020-10-10 20:40:38,028 reid_baseline.train INFO: ----------
+2020-10-10 20:41:11,286 reid_baseline.train INFO: Epoch 66 done. Time per batch: 31.449[s] Speed: 191.3[samples/s]
+2020-10-10 20:41:11,287 reid_baseline.train INFO: ----------
+2020-10-10 20:41:45,131 reid_baseline.train INFO: Epoch 67 done. Time per batch: 32.091[s] Speed: 187.5[samples/s]
+2020-10-10 20:41:45,131 reid_baseline.train INFO: ----------
+2020-10-10 20:42:18,276 reid_baseline.train INFO: Epoch 68 done. Time per batch: 31.502[s] Speed: 191.0[samples/s]
+2020-10-10 20:42:18,276 reid_baseline.train INFO: ----------
+2020-10-10 20:42:53,052 reid_baseline.train INFO: Epoch 69 done. Time per batch: 33.038[s] Speed: 182.1[samples/s]
+2020-10-10 20:42:53,052 reid_baseline.train INFO: ----------
+2020-10-10 20:43:26,308 reid_baseline.train INFO: Epoch 70 done. Time per batch: 31.459[s] Speed: 191.2[samples/s]
+2020-10-10 20:43:26,309 reid_baseline.train INFO: ----------
+2020-10-10 20:43:59,479 reid_baseline.train INFO: Epoch 71 done. Time per batch: 31.372[s] Speed: 191.8[samples/s]
+2020-10-10 20:43:59,480 reid_baseline.train INFO: ----------
+2020-10-10 20:44:33,150 reid_baseline.train INFO: Epoch 72 done. Time per batch: 31.901[s] Speed: 188.6[samples/s]
+2020-10-10 20:44:33,151 reid_baseline.train INFO: ----------
+2020-10-10 20:45:06,041 reid_baseline.train INFO: Epoch 73 done. Time per batch: 31.211[s] Speed: 192.8[samples/s]
+2020-10-10 20:45:06,042 reid_baseline.train INFO: ----------
+2020-10-10 20:45:40,305 reid_baseline.train INFO: Epoch 74 done. Time per batch: 32.548[s] Speed: 184.8[samples/s]
+2020-10-10 20:45:40,306 reid_baseline.train INFO: ----------
+2020-10-10 20:46:14,439 reid_baseline.train INFO: Epoch 75 done. Time per batch: 32.386[s] Speed: 185.8[samples/s]
+2020-10-10 20:46:14,439 reid_baseline.train INFO: ----------
+2020-10-10 20:46:47,864 reid_baseline.train INFO: Epoch 76 done. Time per batch: 31.722[s] Speed: 189.7[samples/s]
+2020-10-10 20:46:47,864 reid_baseline.train INFO: ----------
+2020-10-10 20:47:22,519 reid_baseline.train INFO: Epoch 77 done. Time per batch: 32.854[s] Speed: 183.1[samples/s]
+2020-10-10 20:47:22,519 reid_baseline.train INFO: ----------
+2020-10-10 20:47:55,888 reid_baseline.train INFO: Epoch 78 done. Time per batch: 31.621[s] Speed: 190.3[samples/s]
+2020-10-10 20:47:55,889 reid_baseline.train INFO: ----------
+2020-10-10 20:48:28,854 reid_baseline.train INFO: Epoch 79 done. Time per batch: 31.136[s] Speed: 193.2[samples/s]
+2020-10-10 20:48:28,855 reid_baseline.train INFO: ----------
+2020-10-10 20:49:02,600 reid_baseline.train INFO: Epoch 80 done. Time per batch: 31.673[s] Speed: 189.9[samples/s]
+2020-10-10 20:49:02,600 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 20:49:33,725 reid_baseline.train INFO: Validation Results - Epoch: 80
+2020-10-10 20:49:33,725 reid_baseline.train INFO: mAP: 61.4%
+2020-10-10 20:49:33,725 reid_baseline.train INFO: CMC curve, Rank-1  :62.9%
+2020-10-10 20:49:33,726 reid_baseline.train INFO: CMC curve, Rank-5  :82.1%
+2020-10-10 20:49:33,726 reid_baseline.train INFO: CMC curve, Rank-10 :88.4%
+2020-10-10 20:50:03,029 reid_baseline.train INFO: Epoch 81 done. Time per batch: 27.499[s] Speed: 218.8[samples/s]
+2020-10-10 20:50:03,029 reid_baseline.train INFO: ----------
+2020-10-10 20:50:34,046 reid_baseline.train INFO: Epoch 82 done. Time per batch: 29.383[s] Speed: 204.7[samples/s]
+2020-10-10 20:50:34,046 reid_baseline.train INFO: ----------
+2020-10-10 20:51:06,459 reid_baseline.train INFO: Epoch 83 done. Time per batch: 30.633[s] Speed: 196.4[samples/s]
+2020-10-10 20:51:06,460 reid_baseline.train INFO: ----------
+2020-10-10 20:51:39,423 reid_baseline.train INFO: Epoch 84 done. Time per batch: 31.143[s] Speed: 193.2[samples/s]
+2020-10-10 20:51:39,424 reid_baseline.train INFO: ----------
+2020-10-10 20:52:13,552 reid_baseline.train INFO: Epoch 85 done. Time per batch: 32.310[s] Speed: 186.2[samples/s]
+2020-10-10 20:52:13,552 reid_baseline.train INFO: ----------
+2020-10-10 20:52:46,776 reid_baseline.train INFO: Epoch 86 done. Time per batch: 31.396[s] Speed: 191.6[samples/s]
+2020-10-10 20:52:46,776 reid_baseline.train INFO: ----------
+2020-10-10 20:53:19,960 reid_baseline.train INFO: Epoch 87 done. Time per batch: 31.561[s] Speed: 190.6[samples/s]
+2020-10-10 20:53:19,960 reid_baseline.train INFO: ----------
+2020-10-10 20:53:53,233 reid_baseline.train INFO: Epoch 88 done. Time per batch: 31.440[s] Speed: 191.4[samples/s]
+2020-10-10 20:53:53,234 reid_baseline.train INFO: ----------
+2020-10-10 20:54:27,332 reid_baseline.train INFO: Epoch 89 done. Time per batch: 32.307[s] Speed: 186.2[samples/s]
+2020-10-10 20:54:27,333 reid_baseline.train INFO: ----------
+2020-10-10 20:55:02,097 reid_baseline.train INFO: Epoch 90 done. Time per batch: 32.995[s] Speed: 182.3[samples/s]
+2020-10-10 20:55:02,098 reid_baseline.train INFO: ----------
+2020-10-10 20:55:35,081 reid_baseline.train INFO: Epoch 91 done. Time per batch: 31.194[s] Speed: 192.9[samples/s]
+2020-10-10 20:55:35,081 reid_baseline.train INFO: ----------
+2020-10-10 20:56:08,325 reid_baseline.train INFO: Epoch 92 done. Time per batch: 31.482[s] Speed: 191.1[samples/s]
+2020-10-10 20:56:08,325 reid_baseline.train INFO: ----------
+2020-10-10 20:56:43,003 reid_baseline.train INFO: Epoch 93 done. Time per batch: 32.744[s] Speed: 183.7[samples/s]
+2020-10-10 20:56:43,004 reid_baseline.train INFO: ----------
+2020-10-10 20:57:17,075 reid_baseline.train INFO: Epoch 94 done. Time per batch: 32.267[s] Speed: 186.4[samples/s]
+2020-10-10 20:57:17,076 reid_baseline.train INFO: ----------
+2020-10-10 20:57:50,812 reid_baseline.train INFO: Epoch 95 done. Time per batch: 31.920[s] Speed: 188.5[samples/s]
+2020-10-10 20:57:50,813 reid_baseline.train INFO: ----------
+2020-10-10 20:58:23,609 reid_baseline.train INFO: Epoch 96 done. Time per batch: 30.970[s] Speed: 194.3[samples/s]
+2020-10-10 20:58:23,610 reid_baseline.train INFO: ----------
+2020-10-10 20:58:57,745 reid_baseline.train INFO: Epoch 97 done. Time per batch: 32.316[s] Speed: 186.2[samples/s]
+2020-10-10 20:58:57,745 reid_baseline.train INFO: ----------
+2020-10-10 20:59:31,120 reid_baseline.train INFO: Epoch 98 done. Time per batch: 31.500[s] Speed: 191.0[samples/s]
+2020-10-10 20:59:31,121 reid_baseline.train INFO: ----------
+2020-10-10 21:00:05,410 reid_baseline.train INFO: Epoch 99 done. Time per batch: 32.482[s] Speed: 185.2[samples/s]
+2020-10-10 21:00:05,411 reid_baseline.train INFO: ----------
+2020-10-10 21:00:38,245 reid_baseline.train INFO: Epoch 100 done. Time per batch: 30.959[s] Speed: 194.3[samples/s]
+2020-10-10 21:00:38,245 reid_baseline.train INFO: ----------
+2020-10-10 21:01:12,840 reid_baseline.train INFO: Epoch 101 done. Time per batch: 32.970[s] Speed: 182.5[samples/s]
+2020-10-10 21:01:12,841 reid_baseline.train INFO: ----------
+2020-10-10 21:01:45,751 reid_baseline.train INFO: Epoch 102 done. Time per batch: 31.142[s] Speed: 193.2[samples/s]
+2020-10-10 21:01:45,751 reid_baseline.train INFO: ----------
+2020-10-10 21:02:21,070 reid_baseline.train INFO: Epoch 103 done. Time per batch: 33.279[s] Speed: 180.8[samples/s]
+2020-10-10 21:02:21,070 reid_baseline.train INFO: ----------
+2020-10-10 21:02:53,406 reid_baseline.train INFO: Epoch 104 done. Time per batch: 30.586[s] Speed: 196.7[samples/s]
+2020-10-10 21:02:53,406 reid_baseline.train INFO: ----------
+2020-10-10 21:03:26,781 reid_baseline.train INFO: Epoch 105 done. Time per batch: 31.572[s] Speed: 190.5[samples/s]
+2020-10-10 21:03:26,782 reid_baseline.train INFO: ----------
+2020-10-10 21:03:59,859 reid_baseline.train INFO: Epoch 106 done. Time per batch: 31.347[s] Speed: 191.9[samples/s]
+2020-10-10 21:03:59,860 reid_baseline.train INFO: ----------
+2020-10-10 21:04:33,609 reid_baseline.train INFO: Epoch 107 done. Time per batch: 32.003[s] Speed: 188.0[samples/s]
+2020-10-10 21:04:33,610 reid_baseline.train INFO: ----------
+2020-10-10 21:05:07,048 reid_baseline.train INFO: Epoch 108 done. Time per batch: 31.794[s] Speed: 189.2[samples/s]
+2020-10-10 21:05:07,048 reid_baseline.train INFO: ----------
+2020-10-10 21:05:41,055 reid_baseline.train INFO: Epoch 109 done. Time per batch: 31.985[s] Speed: 188.1[samples/s]
+2020-10-10 21:05:41,055 reid_baseline.train INFO: ----------
+2020-10-10 21:06:14,601 reid_baseline.train INFO: Epoch 110 done. Time per batch: 31.827[s] Speed: 189.0[samples/s]
+2020-10-10 21:06:14,602 reid_baseline.train INFO: ----------
+2020-10-10 21:06:47,839 reid_baseline.train INFO: Epoch 111 done. Time per batch: 31.606[s] Speed: 190.3[samples/s]
+2020-10-10 21:06:47,840 reid_baseline.train INFO: ----------
+2020-10-10 21:07:21,712 reid_baseline.train INFO: Epoch 112 done. Time per batch: 32.135[s] Speed: 187.2[samples/s]
+2020-10-10 21:07:21,713 reid_baseline.train INFO: ----------
+2020-10-10 21:07:54,597 reid_baseline.train INFO: Epoch 113 done. Time per batch: 31.127[s] Speed: 193.3[samples/s]
+2020-10-10 21:07:54,597 reid_baseline.train INFO: ----------
+2020-10-10 21:08:27,831 reid_baseline.train INFO: Epoch 114 done. Time per batch: 31.684[s] Speed: 189.9[samples/s]
+2020-10-10 21:08:27,831 reid_baseline.train INFO: ----------
+2020-10-10 21:09:00,764 reid_baseline.train INFO: Epoch 115 done. Time per batch: 31.148[s] Speed: 193.1[samples/s]
+2020-10-10 21:09:00,764 reid_baseline.train INFO: ----------
+2020-10-10 21:09:35,168 reid_baseline.train INFO: Epoch 116 done. Time per batch: 32.592[s] Speed: 184.6[samples/s]
+2020-10-10 21:09:35,168 reid_baseline.train INFO: ----------
+2020-10-10 21:10:08,492 reid_baseline.train INFO: Epoch 117 done. Time per batch: 31.576[s] Speed: 190.5[samples/s]
+2020-10-10 21:10:08,492 reid_baseline.train INFO: ----------
+2020-10-10 21:10:42,307 reid_baseline.train INFO: Epoch 118 done. Time per batch: 32.080[s] Speed: 187.5[samples/s]
+2020-10-10 21:10:42,307 reid_baseline.train INFO: ----------
+2020-10-10 21:11:16,932 reid_baseline.train INFO: Epoch 119 done. Time per batch: 33.039[s] Speed: 182.1[samples/s]
+2020-10-10 21:11:16,932 reid_baseline.train INFO: ----------
+2020-10-10 21:11:49,961 reid_baseline.train INFO: Epoch 120 done. Time per batch: 30.967[s] Speed: 194.3[samples/s]
+2020-10-10 21:11:49,961 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 21:12:25,733 reid_baseline.train INFO: Validation Results - Epoch: 120
+2020-10-10 21:12:25,734 reid_baseline.train INFO: mAP: 64.2%
+2020-10-10 21:12:25,734 reid_baseline.train INFO: CMC curve, Rank-1  :66.2%
+2020-10-10 21:12:25,734 reid_baseline.train INFO: CMC curve, Rank-5  :84.4%
+2020-10-10 21:12:25,734 reid_baseline.train INFO: CMC curve, Rank-10 :90.9%
+2020-10-10 21:12:53,830 reid_baseline.train INFO: Epoch 121 done. Time per batch: 26.495[s] Speed: 227.1[samples/s]
+2020-10-10 21:12:53,831 reid_baseline.train INFO: ----------
+2020-10-10 21:13:23,059 reid_baseline.train INFO: Epoch 122 done. Time per batch: 27.633[s] Speed: 217.7[samples/s]
+2020-10-10 21:13:23,059 reid_baseline.train INFO: ----------
+2020-10-10 21:13:54,174 reid_baseline.train INFO: Epoch 123 done. Time per batch: 29.364[s] Speed: 204.9[samples/s]
+2020-10-10 21:13:54,175 reid_baseline.train INFO: ----------
+2020-10-10 21:14:26,996 reid_baseline.train INFO: Epoch 124 done. Time per batch: 31.015[s] Speed: 194.0[samples/s]
+2020-10-10 21:14:26,996 reid_baseline.train INFO: ----------
+2020-10-10 21:14:59,624 reid_baseline.train INFO: Epoch 125 done. Time per batch: 30.824[s] Speed: 195.2[samples/s]
+2020-10-10 21:14:59,625 reid_baseline.train INFO: ----------
+2020-10-10 21:15:31,913 reid_baseline.train INFO: Epoch 126 done. Time per batch: 30.495[s] Speed: 197.3[samples/s]
+2020-10-10 21:15:31,913 reid_baseline.train INFO: ----------
+2020-10-10 21:16:05,230 reid_baseline.train INFO: Epoch 127 done. Time per batch: 31.576[s] Speed: 190.5[samples/s]
+2020-10-10 21:16:05,230 reid_baseline.train INFO: ----------
+2020-10-10 21:16:38,781 reid_baseline.train INFO: Epoch 128 done. Time per batch: 31.569[s] Speed: 190.6[samples/s]
+2020-10-10 21:16:38,781 reid_baseline.train INFO: ----------
+2020-10-10 21:17:11,720 reid_baseline.train INFO: Epoch 129 done. Time per batch: 31.116[s] Speed: 193.3[samples/s]
+2020-10-10 21:17:11,720 reid_baseline.train INFO: ----------
+2020-10-10 21:17:44,122 reid_baseline.train INFO: Epoch 130 done. Time per batch: 30.630[s] Speed: 196.4[samples/s]
+2020-10-10 21:17:44,123 reid_baseline.train INFO: ----------
+2020-10-10 21:18:18,134 reid_baseline.train INFO: Epoch 131 done. Time per batch: 32.222[s] Speed: 186.7[samples/s]
+2020-10-10 21:18:18,134 reid_baseline.train INFO: ----------
+2020-10-10 21:18:50,862 reid_baseline.train INFO: Epoch 132 done. Time per batch: 30.835[s] Speed: 195.1[samples/s]
+2020-10-10 21:18:50,863 reid_baseline.train INFO: ----------
+2020-10-10 21:19:25,137 reid_baseline.train INFO: Epoch 133 done. Time per batch: 32.444[s] Speed: 185.4[samples/s]
+2020-10-10 21:19:25,137 reid_baseline.train INFO: ----------
+2020-10-10 21:19:58,735 reid_baseline.train INFO: Epoch 134 done. Time per batch: 31.709[s] Speed: 189.7[samples/s]
+2020-10-10 21:19:58,735 reid_baseline.train INFO: ----------
+2020-10-10 21:20:32,383 reid_baseline.train INFO: Epoch 135 done. Time per batch: 31.827[s] Speed: 189.0[samples/s]
+2020-10-10 21:20:32,384 reid_baseline.train INFO: ----------
+2020-10-10 21:21:06,400 reid_baseline.train INFO: Epoch 136 done. Time per batch: 32.299[s] Speed: 186.3[samples/s]
+2020-10-10 21:21:06,400 reid_baseline.train INFO: ----------
+2020-10-10 21:21:39,162 reid_baseline.train INFO: Epoch 137 done. Time per batch: 30.895[s] Speed: 194.7[samples/s]
+2020-10-10 21:21:39,163 reid_baseline.train INFO: ----------
+2020-10-10 21:22:12,973 reid_baseline.train INFO: Epoch 138 done. Time per batch: 31.938[s] Speed: 188.4[samples/s]
+2020-10-10 21:22:12,973 reid_baseline.train INFO: ----------
+2020-10-10 21:22:46,526 reid_baseline.train INFO: Epoch 139 done. Time per batch: 31.756[s] Speed: 189.4[samples/s]
+2020-10-10 21:22:46,526 reid_baseline.train INFO: ----------
+2020-10-10 21:23:19,977 reid_baseline.train INFO: Epoch 140 done. Time per batch: 31.685[s] Speed: 189.9[samples/s]
+2020-10-10 21:23:19,977 reid_baseline.train INFO: ----------
+2020-10-10 21:23:53,394 reid_baseline.train INFO: Epoch 141 done. Time per batch: 31.558[s] Speed: 190.6[samples/s]
+2020-10-10 21:23:53,395 reid_baseline.train INFO: ----------
+2020-10-10 21:24:26,994 reid_baseline.train INFO: Epoch 142 done. Time per batch: 31.854[s] Speed: 188.9[samples/s]
+2020-10-10 21:24:26,995 reid_baseline.train INFO: ----------
+2020-10-10 21:25:01,641 reid_baseline.train INFO: Epoch 143 done. Time per batch: 32.867[s] Speed: 183.0[samples/s]
+2020-10-10 21:25:01,642 reid_baseline.train INFO: ----------
+2020-10-10 21:25:34,051 reid_baseline.train INFO: Epoch 144 done. Time per batch: 30.666[s] Speed: 196.2[samples/s]
+2020-10-10 21:25:34,052 reid_baseline.train INFO: ----------
+2020-10-10 21:26:08,055 reid_baseline.train INFO: Epoch 145 done. Time per batch: 32.231[s] Speed: 186.6[samples/s]
+2020-10-10 21:26:08,056 reid_baseline.train INFO: ----------
+2020-10-10 21:26:41,250 reid_baseline.train INFO: Epoch 146 done. Time per batch: 31.367[s] Speed: 191.8[samples/s]
+2020-10-10 21:26:41,251 reid_baseline.train INFO: ----------
+2020-10-10 21:27:15,015 reid_baseline.train INFO: Epoch 147 done. Time per batch: 31.953[s] Speed: 188.3[samples/s]
+2020-10-10 21:27:15,015 reid_baseline.train INFO: ----------
+2020-10-10 21:27:48,092 reid_baseline.train INFO: Epoch 148 done. Time per batch: 31.261[s] Speed: 192.4[samples/s]
+2020-10-10 21:27:48,092 reid_baseline.train INFO: ----------
+2020-10-10 21:28:21,805 reid_baseline.train INFO: Epoch 149 done. Time per batch: 31.817[s] Speed: 189.1[samples/s]
+2020-10-10 21:28:21,806 reid_baseline.train INFO: ----------
+2020-10-10 21:28:55,853 reid_baseline.train INFO: Epoch 150 done. Time per batch: 32.338[s] Speed: 186.0[samples/s]
+2020-10-10 21:28:55,853 reid_baseline.train INFO: ----------
+2020-10-10 21:29:28,289 reid_baseline.train INFO: Epoch 151 done. Time per batch: 30.664[s] Speed: 196.2[samples/s]
+2020-10-10 21:29:28,290 reid_baseline.train INFO: ----------
+2020-10-10 21:30:02,141 reid_baseline.train INFO: Epoch 152 done. Time per batch: 32.106[s] Speed: 187.4[samples/s]
+2020-10-10 21:30:02,142 reid_baseline.train INFO: ----------
+2020-10-10 21:30:36,183 reid_baseline.train INFO: Epoch 153 done. Time per batch: 32.227[s] Speed: 186.7[samples/s]
+2020-10-10 21:30:36,183 reid_baseline.train INFO: ----------
+2020-10-10 21:31:10,033 reid_baseline.train INFO: Epoch 154 done. Time per batch: 32.052[s] Speed: 187.7[samples/s]
+2020-10-10 21:31:10,034 reid_baseline.train INFO: ----------
+2020-10-10 21:31:43,033 reid_baseline.train INFO: Epoch 155 done. Time per batch: 31.142[s] Speed: 193.2[samples/s]
+2020-10-10 21:31:43,034 reid_baseline.train INFO: ----------
+2020-10-10 21:32:15,820 reid_baseline.train INFO: Epoch 156 done. Time per batch: 31.155[s] Speed: 193.1[samples/s]
+2020-10-10 21:32:15,821 reid_baseline.train INFO: ----------
+2020-10-10 21:32:50,893 reid_baseline.train INFO: Epoch 157 done. Time per batch: 33.042[s] Speed: 182.1[samples/s]
+2020-10-10 21:32:50,893 reid_baseline.train INFO: ----------
+2020-10-10 21:33:23,619 reid_baseline.train INFO: Epoch 158 done. Time per batch: 30.911[s] Speed: 194.6[samples/s]
+2020-10-10 21:33:23,619 reid_baseline.train INFO: ----------
+2020-10-10 21:33:57,615 reid_baseline.train INFO: Epoch 159 done. Time per batch: 32.276[s] Speed: 186.4[samples/s]
+2020-10-10 21:33:57,615 reid_baseline.train INFO: ----------
+2020-10-10 21:34:30,858 reid_baseline.train INFO: Epoch 160 done. Time per batch: 31.256[s] Speed: 192.5[samples/s]
+2020-10-10 21:34:30,858 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 21:35:01,967 reid_baseline.train INFO: Validation Results - Epoch: 160
+2020-10-10 21:35:01,968 reid_baseline.train INFO: mAP: 65.5%
+2020-10-10 21:35:01,968 reid_baseline.train INFO: CMC curve, Rank-1  :68.5%
+2020-10-10 21:35:01,968 reid_baseline.train INFO: CMC curve, Rank-5  :84.8%
+2020-10-10 21:35:01,968 reid_baseline.train INFO: CMC curve, Rank-10 :91.3%
+2020-10-10 21:35:30,718 reid_baseline.train INFO: Epoch 161 done. Time per batch: 27.054[s] Speed: 222.4[samples/s]
+2020-10-10 21:35:30,719 reid_baseline.train INFO: ----------
+2020-10-10 21:36:02,733 reid_baseline.train INFO: Epoch 162 done. Time per batch: 30.188[s] Speed: 199.3[samples/s]
+2020-10-10 21:36:02,733 reid_baseline.train INFO: ----------
+2020-10-10 21:36:37,263 reid_baseline.train INFO: Epoch 163 done. Time per batch: 32.770[s] Speed: 183.6[samples/s]
+2020-10-10 21:36:37,264 reid_baseline.train INFO: ----------
+2020-10-10 21:37:13,058 reid_baseline.train INFO: Epoch 164 done. Time per batch: 33.975[s] Speed: 177.1[samples/s]
+2020-10-10 21:37:13,059 reid_baseline.train INFO: ----------
+2020-10-10 21:37:50,728 reid_baseline.train INFO: Epoch 165 done. Time per batch: 35.879[s] Speed: 167.7[samples/s]
+2020-10-10 21:37:50,728 reid_baseline.train INFO: ----------
+2020-10-10 21:38:28,986 reid_baseline.train INFO: Epoch 166 done. Time per batch: 36.481[s] Speed: 164.9[samples/s]
+2020-10-10 21:38:28,987 reid_baseline.train INFO: ----------
+2020-10-10 21:39:05,051 reid_baseline.train INFO: Epoch 167 done. Time per batch: 34.223[s] Speed: 175.8[samples/s]
+2020-10-10 21:39:05,051 reid_baseline.train INFO: ----------
+2020-10-10 21:39:42,507 reid_baseline.train INFO: Epoch 168 done. Time per batch: 35.652[s] Speed: 168.7[samples/s]
+2020-10-10 21:39:42,508 reid_baseline.train INFO: ----------
+2020-10-10 21:40:18,232 reid_baseline.train INFO: Epoch 169 done. Time per batch: 33.945[s] Speed: 177.2[samples/s]
+2020-10-10 21:40:18,232 reid_baseline.train INFO: ----------
+2020-10-10 21:40:55,420 reid_baseline.train INFO: Epoch 170 done. Time per batch: 35.459[s] Speed: 169.7[samples/s]
+2020-10-10 21:40:55,420 reid_baseline.train INFO: ----------
+2020-10-10 21:41:31,758 reid_baseline.train INFO: Epoch 171 done. Time per batch: 34.541[s] Speed: 174.2[samples/s]
+2020-10-10 21:41:31,758 reid_baseline.train INFO: ----------
+2020-10-10 21:42:09,380 reid_baseline.train INFO: Epoch 172 done. Time per batch: 35.828[s] Speed: 167.9[samples/s]
+2020-10-10 21:42:09,381 reid_baseline.train INFO: ----------
+2020-10-10 21:42:45,300 reid_baseline.train INFO: Epoch 173 done. Time per batch: 34.299[s] Speed: 175.4[samples/s]
+2020-10-10 21:42:45,301 reid_baseline.train INFO: ----------
+2020-10-10 21:43:22,094 reid_baseline.train INFO: Epoch 174 done. Time per batch: 34.930[s] Speed: 172.2[samples/s]
+2020-10-10 21:43:22,095 reid_baseline.train INFO: ----------
+2020-10-10 21:43:57,721 reid_baseline.train INFO: Epoch 175 done. Time per batch: 33.718[s] Speed: 178.4[samples/s]
+2020-10-10 21:43:57,722 reid_baseline.train INFO: ----------
+2020-10-10 21:44:35,149 reid_baseline.train INFO: Epoch 176 done. Time per batch: 35.653[s] Speed: 168.7[samples/s]
+2020-10-10 21:44:35,149 reid_baseline.train INFO: ----------
+2020-10-10 21:45:12,340 reid_baseline.train INFO: Epoch 177 done. Time per batch: 35.374[s] Speed: 170.1[samples/s]
+2020-10-10 21:45:12,340 reid_baseline.train INFO: ----------
+2020-10-10 21:45:48,339 reid_baseline.train INFO: Epoch 178 done. Time per batch: 34.215[s] Speed: 175.8[samples/s]
+2020-10-10 21:45:48,340 reid_baseline.train INFO: ----------
+2020-10-10 21:46:25,540 reid_baseline.train INFO: Epoch 179 done. Time per batch: 35.069[s] Speed: 171.5[samples/s]
+2020-10-10 21:46:25,540 reid_baseline.train INFO: ----------
+2020-10-10 21:47:01,883 reid_baseline.train INFO: Epoch 180 done. Time per batch: 34.165[s] Speed: 176.1[samples/s]
+2020-10-10 21:47:01,883 reid_baseline.train INFO: ----------
+2020-10-10 21:47:38,740 reid_baseline.train INFO: Epoch 181 done. Time per batch: 35.007[s] Speed: 171.8[samples/s]
+2020-10-10 21:47:38,740 reid_baseline.train INFO: ----------
+2020-10-10 21:48:15,671 reid_baseline.train INFO: Epoch 182 done. Time per batch: 35.188[s] Speed: 171.0[samples/s]
+2020-10-10 21:48:15,672 reid_baseline.train INFO: ----------
+2020-10-10 21:48:51,313 reid_baseline.train INFO: Epoch 183 done. Time per batch: 33.952[s] Speed: 177.2[samples/s]
+2020-10-10 21:48:51,313 reid_baseline.train INFO: ----------
+2020-10-10 21:49:28,878 reid_baseline.train INFO: Epoch 184 done. Time per batch: 35.671[s] Speed: 168.7[samples/s]
+2020-10-10 21:49:28,879 reid_baseline.train INFO: ----------
+2020-10-10 21:50:05,247 reid_baseline.train INFO: Epoch 185 done. Time per batch: 34.604[s] Speed: 173.9[samples/s]
+2020-10-10 21:50:05,248 reid_baseline.train INFO: ----------
+2020-10-10 21:50:44,017 reid_baseline.train INFO: Epoch 186 done. Time per batch: 36.884[s] Speed: 163.1[samples/s]
+2020-10-10 21:50:44,018 reid_baseline.train INFO: ----------
+2020-10-10 21:51:20,247 reid_baseline.train INFO: Epoch 187 done. Time per batch: 34.503[s] Speed: 174.4[samples/s]
+2020-10-10 21:51:20,248 reid_baseline.train INFO: ----------
+2020-10-10 21:51:56,479 reid_baseline.train INFO: Epoch 188 done. Time per batch: 34.432[s] Speed: 174.7[samples/s]
+2020-10-10 21:51:56,480 reid_baseline.train INFO: ----------
+2020-10-10 21:52:32,493 reid_baseline.train INFO: Epoch 189 done. Time per batch: 34.213[s] Speed: 175.8[samples/s]
+2020-10-10 21:52:32,493 reid_baseline.train INFO: ----------
+2020-10-10 21:53:10,734 reid_baseline.train INFO: Epoch 190 done. Time per batch: 36.343[s] Speed: 165.5[samples/s]
+2020-10-10 21:53:10,734 reid_baseline.train INFO: ----------
+2020-10-10 21:53:46,796 reid_baseline.train INFO: Epoch 191 done. Time per batch: 34.134[s] Speed: 176.2[samples/s]
+2020-10-10 21:53:46,797 reid_baseline.train INFO: ----------
+2020-10-10 21:54:25,307 reid_baseline.train INFO: Epoch 192 done. Time per batch: 36.689[s] Speed: 164.0[samples/s]
+2020-10-10 21:54:25,307 reid_baseline.train INFO: ----------
+2020-10-10 21:55:00,610 reid_baseline.train INFO: Epoch 193 done. Time per batch: 33.440[s] Speed: 179.9[samples/s]
+2020-10-10 21:55:00,610 reid_baseline.train INFO: ----------
+2020-10-10 21:55:37,723 reid_baseline.train INFO: Epoch 194 done. Time per batch: 35.486[s] Speed: 169.5[samples/s]
+2020-10-10 21:55:37,724 reid_baseline.train INFO: ----------
+2020-10-10 21:56:13,507 reid_baseline.train INFO: Epoch 195 done. Time per batch: 33.916[s] Speed: 177.4[samples/s]
+2020-10-10 21:56:13,507 reid_baseline.train INFO: ----------
+2020-10-10 21:56:50,422 reid_baseline.train INFO: Epoch 196 done. Time per batch: 35.098[s] Speed: 171.4[samples/s]
+2020-10-10 21:56:50,423 reid_baseline.train INFO: ----------
+2020-10-10 21:57:26,696 reid_baseline.train INFO: Epoch 197 done. Time per batch: 34.450[s] Speed: 174.6[samples/s]
+2020-10-10 21:57:26,697 reid_baseline.train INFO: ----------
+2020-10-10 21:58:04,002 reid_baseline.train INFO: Epoch 198 done. Time per batch: 35.387[s] Speed: 170.0[samples/s]
+2020-10-10 21:58:04,003 reid_baseline.train INFO: ----------
+2020-10-10 21:58:39,952 reid_baseline.train INFO: Epoch 199 done. Time per batch: 34.245[s] Speed: 175.7[samples/s]
+2020-10-10 21:58:39,952 reid_baseline.train INFO: ----------
+2020-10-10 21:59:16,678 reid_baseline.train INFO: Epoch 200 done. Time per batch: 34.515[s] Speed: 174.3[samples/s]
+2020-10-10 21:59:16,678 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 21:59:52,517 reid_baseline.train INFO: Validation Results - Epoch: 200
+2020-10-10 21:59:52,518 reid_baseline.train INFO: mAP: 65.7%
+2020-10-10 21:59:52,518 reid_baseline.train INFO: CMC curve, Rank-1  :68.4%
+2020-10-10 21:59:52,518 reid_baseline.train INFO: CMC curve, Rank-5  :85.6%
+2020-10-10 21:59:52,518 reid_baseline.train INFO: CMC curve, Rank-10 :91.6%
+2020-10-10 22:00:21,999 reid_baseline.train INFO: Epoch 201 done. Time per batch: 27.683[s] Speed: 217.3[samples/s]
+2020-10-10 22:00:21,999 reid_baseline.train INFO: ----------
+2020-10-10 22:00:53,280 reid_baseline.train INFO: Epoch 202 done. Time per batch: 29.574[s] Speed: 203.4[samples/s]
+2020-10-10 22:00:53,280 reid_baseline.train INFO: ----------
+2020-10-10 22:01:28,415 reid_baseline.train INFO: Epoch 203 done. Time per batch: 33.362[s] Speed: 180.3[samples/s]
+2020-10-10 22:01:28,415 reid_baseline.train INFO: ----------
+2020-10-10 22:02:05,337 reid_baseline.train INFO: Epoch 204 done. Time per batch: 35.138[s] Speed: 171.2[samples/s]
+2020-10-10 22:02:05,337 reid_baseline.train INFO: ----------
+2020-10-10 22:02:42,162 reid_baseline.train INFO: Epoch 205 done. Time per batch: 35.034[s] Speed: 171.7[samples/s]
+2020-10-10 22:02:42,163 reid_baseline.train INFO: ----------
+2020-10-10 22:03:17,976 reid_baseline.train INFO: Epoch 206 done. Time per batch: 33.983[s] Speed: 177.0[samples/s]
+2020-10-10 22:03:17,977 reid_baseline.train INFO: ----------
+2020-10-10 22:03:54,207 reid_baseline.train INFO: Epoch 207 done. Time per batch: 34.502[s] Speed: 174.4[samples/s]
+2020-10-10 22:03:54,207 reid_baseline.train INFO: ----------
+2020-10-10 22:04:32,738 reid_baseline.train INFO: Epoch 208 done. Time per batch: 36.424[s] Speed: 165.2[samples/s]
+2020-10-10 22:04:32,738 reid_baseline.train INFO: ----------
+2020-10-10 22:05:09,580 reid_baseline.train INFO: Epoch 209 done. Time per batch: 35.021[s] Speed: 171.8[samples/s]
+2020-10-10 22:05:09,580 reid_baseline.train INFO: ----------
+2020-10-10 22:05:45,625 reid_baseline.train INFO: Epoch 210 done. Time per batch: 34.239[s] Speed: 175.7[samples/s]
+2020-10-10 22:05:45,625 reid_baseline.train INFO: ----------
+2020-10-10 22:06:22,770 reid_baseline.train INFO: Epoch 211 done. Time per batch: 35.505[s] Speed: 169.4[samples/s]
+2020-10-10 22:06:22,770 reid_baseline.train INFO: ----------
+2020-10-10 22:06:59,029 reid_baseline.train INFO: Epoch 212 done. Time per batch: 34.527[s] Speed: 174.2[samples/s]
+2020-10-10 22:06:59,029 reid_baseline.train INFO: ----------
+2020-10-10 22:07:34,847 reid_baseline.train INFO: Epoch 213 done. Time per batch: 34.071[s] Speed: 176.6[samples/s]
+2020-10-10 22:07:34,848 reid_baseline.train INFO: ----------
+2020-10-10 22:08:10,985 reid_baseline.train INFO: Epoch 214 done. Time per batch: 34.288[s] Speed: 175.5[samples/s]
+2020-10-10 22:08:10,986 reid_baseline.train INFO: ----------
+2020-10-10 22:08:47,466 reid_baseline.train INFO: Epoch 215 done. Time per batch: 34.766[s] Speed: 173.0[samples/s]
+2020-10-10 22:08:47,466 reid_baseline.train INFO: ----------
+2020-10-10 22:09:21,324 reid_baseline.train INFO: Epoch 216 done. Time per batch: 32.057[s] Speed: 187.7[samples/s]
+2020-10-10 22:09:21,324 reid_baseline.train INFO: ----------
+2020-10-10 22:09:56,496 reid_baseline.train INFO: Epoch 217 done. Time per batch: 33.287[s] Speed: 180.7[samples/s]
+2020-10-10 22:09:56,497 reid_baseline.train INFO: ----------
+2020-10-10 22:10:30,772 reid_baseline.train INFO: Epoch 218 done. Time per batch: 32.404[s] Speed: 185.7[samples/s]
+2020-10-10 22:10:30,773 reid_baseline.train INFO: ----------
+2020-10-10 22:11:05,547 reid_baseline.train INFO: Epoch 219 done. Time per batch: 33.089[s] Speed: 181.8[samples/s]
+2020-10-10 22:11:05,548 reid_baseline.train INFO: ----------
+2020-10-10 22:11:39,561 reid_baseline.train INFO: Epoch 220 done. Time per batch: 32.160[s] Speed: 187.1[samples/s]
+2020-10-10 22:11:39,562 reid_baseline.train INFO: ----------
+2020-10-10 22:12:14,065 reid_baseline.train INFO: Epoch 221 done. Time per batch: 32.703[s] Speed: 184.0[samples/s]
+2020-10-10 22:12:14,066 reid_baseline.train INFO: ----------
+2020-10-10 22:12:48,310 reid_baseline.train INFO: Epoch 222 done. Time per batch: 32.464[s] Speed: 185.3[samples/s]
+2020-10-10 22:12:48,311 reid_baseline.train INFO: ----------
+2020-10-10 22:13:22,970 reid_baseline.train INFO: Epoch 223 done. Time per batch: 32.984[s] Speed: 182.4[samples/s]
+2020-10-10 22:13:22,971 reid_baseline.train INFO: ----------
+2020-10-10 22:13:58,047 reid_baseline.train INFO: Epoch 224 done. Time per batch: 33.281[s] Speed: 180.8[samples/s]
+2020-10-10 22:13:58,047 reid_baseline.train INFO: ----------
+2020-10-10 22:14:32,035 reid_baseline.train INFO: Epoch 225 done. Time per batch: 32.212[s] Speed: 186.8[samples/s]
+2020-10-10 22:14:32,036 reid_baseline.train INFO: ----------
+2020-10-10 22:15:08,721 reid_baseline.train INFO: Epoch 226 done. Time per batch: 34.872[s] Speed: 172.5[samples/s]
+2020-10-10 22:15:08,722 reid_baseline.train INFO: ----------
+2020-10-10 22:15:43,526 reid_baseline.train INFO: Epoch 227 done. Time per batch: 33.073[s] Speed: 181.9[samples/s]
+2020-10-10 22:15:43,526 reid_baseline.train INFO: ----------
+2020-10-10 22:16:18,792 reid_baseline.train INFO: Epoch 228 done. Time per batch: 33.392[s] Speed: 180.2[samples/s]
+2020-10-10 22:16:18,792 reid_baseline.train INFO: ----------
+2020-10-10 22:16:55,091 reid_baseline.train INFO: Epoch 229 done. Time per batch: 34.363[s] Speed: 175.1[samples/s]
+2020-10-10 22:16:55,092 reid_baseline.train INFO: ----------
+2020-10-10 22:17:32,561 reid_baseline.train INFO: Epoch 230 done. Time per batch: 35.642[s] Speed: 168.8[samples/s]
+2020-10-10 22:17:32,562 reid_baseline.train INFO: ----------
+2020-10-10 22:18:07,705 reid_baseline.train INFO: Epoch 231 done. Time per batch: 33.297[s] Speed: 180.7[samples/s]
+2020-10-10 22:18:07,706 reid_baseline.train INFO: ----------
+2020-10-10 22:18:43,872 reid_baseline.train INFO: Epoch 232 done. Time per batch: 34.374[s] Speed: 175.0[samples/s]
+2020-10-10 22:18:43,873 reid_baseline.train INFO: ----------
+2020-10-10 22:19:19,892 reid_baseline.train INFO: Epoch 233 done. Time per batch: 34.151[s] Speed: 176.2[samples/s]
+2020-10-10 22:19:19,892 reid_baseline.train INFO: ----------
+2020-10-10 22:19:55,429 reid_baseline.train INFO: Epoch 234 done. Time per batch: 33.628[s] Speed: 178.9[samples/s]
+2020-10-10 22:19:55,429 reid_baseline.train INFO: ----------
+2020-10-10 22:20:31,261 reid_baseline.train INFO: Epoch 235 done. Time per batch: 34.041[s] Speed: 176.7[samples/s]
+2020-10-10 22:20:31,261 reid_baseline.train INFO: ----------
+2020-10-10 22:21:06,771 reid_baseline.train INFO: Epoch 236 done. Time per batch: 33.853[s] Speed: 177.7[samples/s]
+2020-10-10 22:21:06,772 reid_baseline.train INFO: ----------
+2020-10-10 22:21:42,405 reid_baseline.train INFO: Epoch 237 done. Time per batch: 33.796[s] Speed: 178.0[samples/s]
+2020-10-10 22:21:42,406 reid_baseline.train INFO: ----------
+2020-10-10 22:22:18,154 reid_baseline.train INFO: Epoch 238 done. Time per batch: 33.878[s] Speed: 177.6[samples/s]
+2020-10-10 22:22:18,155 reid_baseline.train INFO: ----------
+2020-10-10 22:22:53,917 reid_baseline.train INFO: Epoch 239 done. Time per batch: 33.870[s] Speed: 177.6[samples/s]
+2020-10-10 22:22:53,918 reid_baseline.train INFO: ----------
+2020-10-10 22:23:30,257 reid_baseline.train INFO: Epoch 240 done. Time per batch: 34.158[s] Speed: 176.1[samples/s]
+2020-10-10 22:23:30,258 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 22:24:04,578 reid_baseline.train INFO: Validation Results - Epoch: 240
+2020-10-10 22:24:04,578 reid_baseline.train INFO: mAP: 66.4%
+2020-10-10 22:24:04,579 reid_baseline.train INFO: CMC curve, Rank-1  :69.4%
+2020-10-10 22:24:04,579 reid_baseline.train INFO: CMC curve, Rank-5  :85.6%
+2020-10-10 22:24:04,579 reid_baseline.train INFO: CMC curve, Rank-10 :91.4%
+2020-10-10 22:24:33,344 reid_baseline.train INFO: Epoch 241 done. Time per batch: 27.066[s] Speed: 222.3[samples/s]
+2020-10-10 22:24:33,345 reid_baseline.train INFO: ----------
+2020-10-10 22:25:05,182 reid_baseline.train INFO: Epoch 242 done. Time per batch: 30.004[s] Speed: 200.5[samples/s]
+2020-10-10 22:25:05,182 reid_baseline.train INFO: ----------
+2020-10-10 22:25:40,186 reid_baseline.train INFO: Epoch 243 done. Time per batch: 33.150[s] Speed: 181.5[samples/s]
+2020-10-10 22:25:40,187 reid_baseline.train INFO: ----------
+2020-10-10 22:26:15,633 reid_baseline.train INFO: Epoch 244 done. Time per batch: 33.709[s] Speed: 178.5[samples/s]
+2020-10-10 22:26:15,633 reid_baseline.train INFO: ----------
+2020-10-10 22:26:50,437 reid_baseline.train INFO: Epoch 245 done. Time per batch: 33.044[s] Speed: 182.1[samples/s]
+2020-10-10 22:26:50,437 reid_baseline.train INFO: ----------
+2020-10-10 22:27:25,960 reid_baseline.train INFO: Epoch 246 done. Time per batch: 33.848[s] Speed: 177.7[samples/s]
+2020-10-10 22:27:25,960 reid_baseline.train INFO: ----------
+2020-10-10 22:28:03,246 reid_baseline.train INFO: Epoch 247 done. Time per batch: 35.430[s] Speed: 169.8[samples/s]
+2020-10-10 22:28:03,247 reid_baseline.train INFO: ----------
+2020-10-10 22:28:37,894 reid_baseline.train INFO: Epoch 248 done. Time per batch: 32.859[s] Speed: 183.1[samples/s]
+2020-10-10 22:28:37,895 reid_baseline.train INFO: ----------
+2020-10-10 22:29:14,005 reid_baseline.train INFO: Epoch 249 done. Time per batch: 34.274[s] Speed: 175.5[samples/s]
+2020-10-10 22:29:14,006 reid_baseline.train INFO: ----------
+2020-10-10 22:29:49,371 reid_baseline.train INFO: Epoch 250 done. Time per batch: 33.564[s] Speed: 179.2[samples/s]
+2020-10-10 22:29:49,372 reid_baseline.train INFO: ----------
+2020-10-10 22:30:25,715 reid_baseline.train INFO: Epoch 251 done. Time per batch: 34.440[s] Speed: 174.7[samples/s]
+2020-10-10 22:30:25,716 reid_baseline.train INFO: ----------
+2020-10-10 22:31:01,543 reid_baseline.train INFO: Epoch 252 done. Time per batch: 33.949[s] Speed: 177.2[samples/s]
+2020-10-10 22:31:01,544 reid_baseline.train INFO: ----------
+2020-10-10 22:31:37,142 reid_baseline.train INFO: Epoch 253 done. Time per batch: 33.809[s] Speed: 177.9[samples/s]
+2020-10-10 22:31:37,143 reid_baseline.train INFO: ----------
+2020-10-10 22:32:11,918 reid_baseline.train INFO: Epoch 254 done. Time per batch: 32.823[s] Speed: 183.3[samples/s]
+2020-10-10 22:32:11,918 reid_baseline.train INFO: ----------
+2020-10-10 22:32:45,782 reid_baseline.train INFO: Epoch 255 done. Time per batch: 32.023[s] Speed: 187.9[samples/s]
+2020-10-10 22:32:45,782 reid_baseline.train INFO: ----------
+2020-10-10 22:33:19,889 reid_baseline.train INFO: Epoch 256 done. Time per batch: 32.398[s] Speed: 185.7[samples/s]
+2020-10-10 22:33:19,890 reid_baseline.train INFO: ----------
+2020-10-10 22:33:55,451 reid_baseline.train INFO: Epoch 257 done. Time per batch: 33.682[s] Speed: 178.6[samples/s]
+2020-10-10 22:33:55,451 reid_baseline.train INFO: ----------
+2020-10-10 22:34:31,327 reid_baseline.train INFO: Epoch 258 done. Time per batch: 34.074[s] Speed: 176.6[samples/s]
+2020-10-10 22:34:31,328 reid_baseline.train INFO: ----------
+2020-10-10 22:35:07,416 reid_baseline.train INFO: Epoch 259 done. Time per batch: 34.173[s] Speed: 176.0[samples/s]
+2020-10-10 22:35:07,417 reid_baseline.train INFO: ----------
+2020-10-10 22:35:42,995 reid_baseline.train INFO: Epoch 260 done. Time per batch: 33.830[s] Speed: 177.8[samples/s]
+2020-10-10 22:35:42,996 reid_baseline.train INFO: ----------
+2020-10-10 22:36:20,143 reid_baseline.train INFO: Epoch 261 done. Time per batch: 35.257[s] Speed: 170.6[samples/s]
+2020-10-10 22:36:20,144 reid_baseline.train INFO: ----------
+2020-10-10 22:36:57,149 reid_baseline.train INFO: Epoch 262 done. Time per batch: 35.278[s] Speed: 170.5[samples/s]
+2020-10-10 22:36:57,150 reid_baseline.train INFO: ----------
+2020-10-10 22:37:35,129 reid_baseline.train INFO: Epoch 263 done. Time per batch: 36.159[s] Speed: 166.4[samples/s]
+2020-10-10 22:37:35,130 reid_baseline.train INFO: ----------
+2020-10-10 22:38:11,846 reid_baseline.train INFO: Epoch 264 done. Time per batch: 35.022[s] Speed: 171.8[samples/s]
+2020-10-10 22:38:11,847 reid_baseline.train INFO: ----------
+2020-10-10 22:38:49,945 reid_baseline.train INFO: Epoch 265 done. Time per batch: 36.165[s] Speed: 166.3[samples/s]
+2020-10-10 22:38:49,946 reid_baseline.train INFO: ----------
+2020-10-10 22:39:26,502 reid_baseline.train INFO: Epoch 266 done. Time per batch: 34.679[s] Speed: 173.5[samples/s]
+2020-10-10 22:39:26,502 reid_baseline.train INFO: ----------
+2020-10-10 22:40:03,486 reid_baseline.train INFO: Epoch 267 done. Time per batch: 35.302[s] Speed: 170.4[samples/s]
+2020-10-10 22:40:03,486 reid_baseline.train INFO: ----------
+2020-10-10 22:40:40,177 reid_baseline.train INFO: Epoch 268 done. Time per batch: 34.878[s] Speed: 172.5[samples/s]
+2020-10-10 22:40:40,177 reid_baseline.train INFO: ----------
+2020-10-10 22:41:18,103 reid_baseline.train INFO: Epoch 269 done. Time per batch: 36.045[s] Speed: 166.9[samples/s]
+2020-10-10 22:41:18,104 reid_baseline.train INFO: ----------
+2020-10-10 22:41:55,246 reid_baseline.train INFO: Epoch 270 done. Time per batch: 35.317[s] Speed: 170.3[samples/s]
+2020-10-10 22:41:55,246 reid_baseline.train INFO: ----------
+2020-10-10 22:42:32,659 reid_baseline.train INFO: Epoch 271 done. Time per batch: 35.752[s] Speed: 168.3[samples/s]
+2020-10-10 22:42:32,659 reid_baseline.train INFO: ----------
+2020-10-10 22:43:10,034 reid_baseline.train INFO: Epoch 272 done. Time per batch: 35.619[s] Speed: 168.9[samples/s]
+2020-10-10 22:43:10,035 reid_baseline.train INFO: ----------
+2020-10-10 22:43:47,077 reid_baseline.train INFO: Epoch 273 done. Time per batch: 35.147[s] Speed: 171.2[samples/s]
+2020-10-10 22:43:47,077 reid_baseline.train INFO: ----------
+2020-10-10 22:44:24,626 reid_baseline.train INFO: Epoch 274 done. Time per batch: 35.800[s] Speed: 168.0[samples/s]
+2020-10-10 22:44:24,626 reid_baseline.train INFO: ----------
+2020-10-10 22:45:01,840 reid_baseline.train INFO: Epoch 275 done. Time per batch: 35.383[s] Speed: 170.0[samples/s]
+2020-10-10 22:45:01,841 reid_baseline.train INFO: ----------
+2020-10-10 22:45:39,548 reid_baseline.train INFO: Epoch 276 done. Time per batch: 35.898[s] Speed: 167.6[samples/s]
+2020-10-10 22:45:39,549 reid_baseline.train INFO: ----------
+2020-10-10 22:46:16,964 reid_baseline.train INFO: Epoch 277 done. Time per batch: 35.659[s] Speed: 168.7[samples/s]
+2020-10-10 22:46:16,965 reid_baseline.train INFO: ----------
+2020-10-10 22:46:55,138 reid_baseline.train INFO: Epoch 278 done. Time per batch: 36.380[s] Speed: 165.4[samples/s]
+2020-10-10 22:46:55,138 reid_baseline.train INFO: ----------
+2020-10-10 22:47:33,190 reid_baseline.train INFO: Epoch 279 done. Time per batch: 36.205[s] Speed: 166.2[samples/s]
+2020-10-10 22:47:33,191 reid_baseline.train INFO: ----------
+2020-10-10 22:48:09,842 reid_baseline.train INFO: Epoch 280 done. Time per batch: 34.650[s] Speed: 173.6[samples/s]
+2020-10-10 22:48:09,842 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 22:48:42,747 reid_baseline.train INFO: Validation Results - Epoch: 280
+2020-10-10 22:48:42,748 reid_baseline.train INFO: mAP: 66.5%
+2020-10-10 22:48:42,748 reid_baseline.train INFO: CMC curve, Rank-1  :69.1%
+2020-10-10 22:48:42,748 reid_baseline.train INFO: CMC curve, Rank-5  :86.0%
+2020-10-10 22:48:42,748 reid_baseline.train INFO: CMC curve, Rank-10 :91.6%
+2020-10-10 22:49:12,386 reid_baseline.train INFO: Epoch 281 done. Time per batch: 28.015[s] Speed: 214.7[samples/s]
+2020-10-10 22:49:12,387 reid_baseline.train INFO: ----------
+2020-10-10 22:49:45,853 reid_baseline.train INFO: Epoch 282 done. Time per batch: 31.663[s] Speed: 190.0[samples/s]
+2020-10-10 22:49:45,854 reid_baseline.train INFO: ----------
+2020-10-10 22:50:23,399 reid_baseline.train INFO: Epoch 283 done. Time per batch: 35.696[s] Speed: 168.5[samples/s]
+2020-10-10 22:50:23,399 reid_baseline.train INFO: ----------
+2020-10-10 22:51:00,797 reid_baseline.train INFO: Epoch 284 done. Time per batch: 35.536[s] Speed: 169.3[samples/s]
+2020-10-10 22:51:00,797 reid_baseline.train INFO: ----------
+2020-10-10 22:51:37,744 reid_baseline.train INFO: Epoch 285 done. Time per batch: 35.218[s] Speed: 170.8[samples/s]
+2020-10-10 22:51:37,744 reid_baseline.train INFO: ----------
+2020-10-10 22:52:14,061 reid_baseline.train INFO: Epoch 286 done. Time per batch: 34.531[s] Speed: 174.2[samples/s]
+2020-10-10 22:52:14,062 reid_baseline.train INFO: ----------
+2020-10-10 22:52:51,351 reid_baseline.train INFO: Epoch 287 done. Time per batch: 35.486[s] Speed: 169.5[samples/s]
+2020-10-10 22:52:51,351 reid_baseline.train INFO: ----------
+2020-10-10 22:53:28,537 reid_baseline.train INFO: Epoch 288 done. Time per batch: 35.478[s] Speed: 169.6[samples/s]
+2020-10-10 22:53:28,537 reid_baseline.train INFO: ----------
+2020-10-10 22:54:05,320 reid_baseline.train INFO: Epoch 289 done. Time per batch: 34.836[s] Speed: 172.7[samples/s]
+2020-10-10 22:54:05,320 reid_baseline.train INFO: ----------
+2020-10-10 22:54:42,637 reid_baseline.train INFO: Epoch 290 done. Time per batch: 35.579[s] Speed: 169.1[samples/s]
+2020-10-10 22:54:42,637 reid_baseline.train INFO: ----------
+2020-10-10 22:55:20,371 reid_baseline.train INFO: Epoch 291 done. Time per batch: 35.897[s] Speed: 167.6[samples/s]
+2020-10-10 22:55:20,372 reid_baseline.train INFO: ----------
+2020-10-10 22:55:58,150 reid_baseline.train INFO: Epoch 292 done. Time per batch: 36.128[s] Speed: 166.5[samples/s]
+2020-10-10 22:55:58,151 reid_baseline.train INFO: ----------
+2020-10-10 22:56:34,900 reid_baseline.train INFO: Epoch 293 done. Time per batch: 35.001[s] Speed: 171.9[samples/s]
+2020-10-10 22:56:34,900 reid_baseline.train INFO: ----------
+2020-10-10 22:57:11,998 reid_baseline.train INFO: Epoch 294 done. Time per batch: 35.144[s] Speed: 171.2[samples/s]
+2020-10-10 22:57:11,998 reid_baseline.train INFO: ----------
+2020-10-10 22:57:49,588 reid_baseline.train INFO: Epoch 295 done. Time per batch: 35.734[s] Speed: 168.4[samples/s]
+2020-10-10 22:57:49,588 reid_baseline.train INFO: ----------
+2020-10-10 22:58:26,543 reid_baseline.train INFO: Epoch 296 done. Time per batch: 35.175[s] Speed: 171.0[samples/s]
+2020-10-10 22:58:26,544 reid_baseline.train INFO: ----------
+2020-10-10 22:59:03,655 reid_baseline.train INFO: Epoch 297 done. Time per batch: 35.376[s] Speed: 170.1[samples/s]
+2020-10-10 22:59:03,655 reid_baseline.train INFO: ----------
+2020-10-10 22:59:40,896 reid_baseline.train INFO: Epoch 298 done. Time per batch: 35.537[s] Speed: 169.3[samples/s]
+2020-10-10 22:59:40,896 reid_baseline.train INFO: ----------
+2020-10-10 23:00:17,890 reid_baseline.train INFO: Epoch 299 done. Time per batch: 35.242[s] Speed: 170.7[samples/s]
+2020-10-10 23:00:17,891 reid_baseline.train INFO: ----------
+2020-10-10 23:00:54,523 reid_baseline.train INFO: Epoch 300 done. Time per batch: 35.022[s] Speed: 171.8[samples/s]
+2020-10-10 23:00:54,523 reid_baseline.train INFO: ----------
+2020-10-10 23:01:31,816 reid_baseline.train INFO: Epoch 301 done. Time per batch: 35.477[s] Speed: 169.6[samples/s]
+2020-10-10 23:01:31,816 reid_baseline.train INFO: ----------
+2020-10-10 23:02:09,053 reid_baseline.train INFO: Epoch 302 done. Time per batch: 35.391[s] Speed: 170.0[samples/s]
+2020-10-10 23:02:09,054 reid_baseline.train INFO: ----------
+2020-10-10 23:02:45,756 reid_baseline.train INFO: Epoch 303 done. Time per batch: 34.924[s] Speed: 172.3[samples/s]
+2020-10-10 23:02:45,757 reid_baseline.train INFO: ----------
+2020-10-10 23:03:23,792 reid_baseline.train INFO: Epoch 304 done. Time per batch: 36.119[s] Speed: 166.6[samples/s]
+2020-10-10 23:03:23,793 reid_baseline.train INFO: ----------
+2020-10-10 23:04:00,677 reid_baseline.train INFO: Epoch 305 done. Time per batch: 35.071[s] Speed: 171.5[samples/s]
+2020-10-10 23:04:00,677 reid_baseline.train INFO: ----------
+2020-10-10 23:04:38,528 reid_baseline.train INFO: Epoch 306 done. Time per batch: 36.104[s] Speed: 166.6[samples/s]
+2020-10-10 23:04:38,529 reid_baseline.train INFO: ----------
+2020-10-10 23:05:16,478 reid_baseline.train INFO: Epoch 307 done. Time per batch: 36.260[s] Speed: 165.9[samples/s]
+2020-10-10 23:05:16,478 reid_baseline.train INFO: ----------
+2020-10-10 23:05:53,301 reid_baseline.train INFO: Epoch 308 done. Time per batch: 34.873[s] Speed: 172.5[samples/s]
+2020-10-10 23:05:53,301 reid_baseline.train INFO: ----------
+2020-10-10 23:06:30,435 reid_baseline.train INFO: Epoch 309 done. Time per batch: 35.275[s] Speed: 170.5[samples/s]
+2020-10-10 23:06:30,435 reid_baseline.train INFO: ----------
+2020-10-10 23:07:07,768 reid_baseline.train INFO: Epoch 310 done. Time per batch: 35.460[s] Speed: 169.7[samples/s]
+2020-10-10 23:07:07,769 reid_baseline.train INFO: ----------
+2020-10-10 23:07:44,651 reid_baseline.train INFO: Epoch 311 done. Time per batch: 35.132[s] Speed: 171.2[samples/s]
+2020-10-10 23:07:44,651 reid_baseline.train INFO: ----------
+2020-10-10 23:08:22,213 reid_baseline.train INFO: Epoch 312 done. Time per batch: 35.765[s] Speed: 168.2[samples/s]
+2020-10-10 23:08:22,213 reid_baseline.train INFO: ----------
+2020-10-10 23:08:59,137 reid_baseline.train INFO: Epoch 313 done. Time per batch: 35.241[s] Speed: 170.7[samples/s]
+2020-10-10 23:08:59,138 reid_baseline.train INFO: ----------
+2020-10-10 23:09:36,066 reid_baseline.train INFO: Epoch 314 done. Time per batch: 35.077[s] Speed: 171.5[samples/s]
+2020-10-10 23:09:36,067 reid_baseline.train INFO: ----------
+2020-10-10 23:10:13,583 reid_baseline.train INFO: Epoch 315 done. Time per batch: 35.740[s] Speed: 168.3[samples/s]
+2020-10-10 23:10:13,584 reid_baseline.train INFO: ----------
+2020-10-10 23:10:50,499 reid_baseline.train INFO: Epoch 316 done. Time per batch: 35.094[s] Speed: 171.4[samples/s]
+2020-10-10 23:10:50,500 reid_baseline.train INFO: ----------
+2020-10-10 23:11:28,039 reid_baseline.train INFO: Epoch 317 done. Time per batch: 35.614[s] Speed: 168.9[samples/s]
+2020-10-10 23:11:28,040 reid_baseline.train INFO: ----------
+2020-10-10 23:12:04,714 reid_baseline.train INFO: Epoch 318 done. Time per batch: 34.887[s] Speed: 172.4[samples/s]
+2020-10-10 23:12:04,715 reid_baseline.train INFO: ----------
+2020-10-10 23:12:41,911 reid_baseline.train INFO: Epoch 319 done. Time per batch: 35.527[s] Speed: 169.3[samples/s]
+2020-10-10 23:12:41,911 reid_baseline.train INFO: ----------
+2020-10-10 23:13:19,244 reid_baseline.train INFO: Epoch 320 done. Time per batch: 35.284[s] Speed: 170.5[samples/s]
+2020-10-10 23:13:19,244 reid_baseline.train INFO: ----------
+using cosine
+2020-10-10 23:13:53,610 reid_baseline.train INFO: Validation Results - Epoch: 320
+2020-10-10 23:13:53,611 reid_baseline.train INFO: mAP: 67.5%
+2020-10-10 23:13:53,611 reid_baseline.train INFO: CMC curve, Rank-1  :70.4%
+2020-10-10 23:13:53,611 reid_baseline.train INFO: CMC curve, Rank-5  :86.5%
+2020-10-10 23:13:53,611 reid_baseline.train INFO: CMC curve, Rank-10 :92.2%

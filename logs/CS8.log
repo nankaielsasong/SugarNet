@@ -1,0 +1,160 @@
+nohup: ignoring input
+2020-09-11 09:40:31,849 reid_baseline INFO: Using 1 GPUS
+2020-09-11 09:40:31,849 reid_baseline INFO: Namespace(config_file='configs/softmax_triplet.yml', load_LRpart1_Optimizer_Path=None, load_LRpart1_Path=None, opts=[])
+2020-09-11 09:40:31,849 reid_baseline INFO: Loaded configuration file configs/softmax_triplet.yml
+2020-09-11 09:40:31,850 reid_baseline INFO: 
+MODEL:
+  PRETRAIN_PATH: '/export/home/dongshichao/.torch/models/resnet50-19c8e357.pth'
+
+
+INPUT:
+#  SIZE_TRAIN: [128, 64]
+  SIZE_TRAIN: [256, 128]
+#  SIZE_TRAIN: [360, 180]
+#  SIZE_TRAIN: [288, 144]
+#  SIZE_TEST: [288, 144]
+#  SIZE_TEST: [360, 180]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  PADDING: 10
+
+DATASETS:
+#   NAMES: ('cuhk03')
+#   NAMES: ('dukemtmc')
+  NAMES: ('market1501')
+#   NAMES: ('msmt17')
+DATALOADER:
+  SAMPLER: 'multiple_softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 320
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  IMS_PER_BATCH: 64
+
+  # STEPS: [40, 70]
+  STEPS: [40, 90]
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 40 
+  LOG_PERIOD: 100
+  EVAL_PERIOD: 40 
+
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: '/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth'
+
+OUTPUT_DIR: "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/songcy/BNNeck/ChannelSplit8/market1501"
+
+2020-09-11 09:40:31,850 reid_baseline INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+  SAMPLER: multiple_softmax_triplet
+DATASETS:
+  NAMES: market1501
+INPUT:
+  PADDING: 10
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  PROB: 0.5
+  SIZE_TEST: [256, 128]
+  SIZE_TRAIN: [256, 128]
+MODEL:
+  DEVICE: cuda
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /export/home/dongshichao/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/songcy/BNNeck/ChannelSplit8/market1501
+SOLVER:
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 40
+  EVAL_PERIOD: 40
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 100
+  MARGIN: 0.2
+  MAX_EPOCHS: 320
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (40, 90)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth
+=> Market1501 loaded
+Dataset statistics:
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   751 |    12936 |         6
+  query    |   750 |     3368 |         6
+  gallery  |   751 |    15913 |         6
+  ----------------------------------------
+2020-09-11 09:40:34,151 reid_baseline.train INFO: Start training
+/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/optim/lr_scheduler.py:122: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  "https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate", UserWarning)
+Current run is terminating due to exception: Given groups=1, weight of size 512 128 3 3, expected input[64, 64, 16, 8] to have 128 channels, but got 64 channels instead.
+Engine run is terminating due to exception: Given groups=1, weight of size 512 128 3 3, expected input[64, 64, 16, 8] to have 128 channels, but got 64 channels instead.
+Traceback (most recent call last):
+  File "tools/train.py", line 119, in <module>
+    main()
+  File "tools/train.py", line 115, in main
+    train(cfg, num_gpus, args.load_LRpart1_Path, args.load_LRpart1_Optimizer_Path)
+  File "tools/train.py", line 63, in train
+    num_gpus
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/engine/trainer.py", line 193, in do_train
+    trainer.run(train_loader, max_epochs=epochs)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 658, in run
+    return self._internal_run()
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 729, in _internal_run
+    self._handle_exception(e)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 437, in _handle_exception
+    raise e
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 697, in _internal_run
+    time_taken = self._run_once_on_dataset()
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 795, in _run_once_on_dataset
+    self._handle_exception(e)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 437, in _handle_exception
+    raise e
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/ignite/engine/engine.py", line 778, in _run_once_on_dataset
+    self.state.output = self._process_function(self, self.state.batch)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/engine/trainer.py", line 52, in _update
+    score, feat = model(img, target)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/modeling/new_channel_8.py", line 193, in forward
+    chan_1, chan_2, chan_3, chan_4, chan_5, chan_6, chan_7, chan_8 = self.channel_extra(reid_feat)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/modeling/new_channel_8.py", line 85, in forward
+    x1, x2, x3, x4, x5, x6, x7, x8  = self.extra_layer(x)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/container.py", line 100, in forward
+    input = module(input)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/modeling/backbones/resnet_cs8.py", line 167, in forward
+    out_1 = self.dep_conv1(out_1)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 345, in forward
+    return self.conv2d_forward(input, self.weight)
+  File "/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 342, in conv2d_forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: Given groups=1, weight of size 512 128 3 3, expected input[64, 64, 16, 8] to have 128 channels, but got 64 channels instead

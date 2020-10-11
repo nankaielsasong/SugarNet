@@ -1,0 +1,150 @@
+nohup: ignoring input
+2020-10-05 17:19:55,446 reid_baseline INFO: Using 1 GPUS
+2020-10-05 17:19:55,446 reid_baseline INFO: Namespace(config_file='configs/softmax_triplet.yml', load_LRpart1_Optimizer_Path=None, load_LRpart1_Path=None, opts=[])
+2020-10-05 17:19:55,446 reid_baseline INFO: Loaded configuration file configs/softmax_triplet.yml
+2020-10-05 17:19:55,446 reid_baseline INFO: 
+MODEL:
+  PRETRAIN_PATH: '/export/home/dongshichao/.torch/models/resnet50-19c8e357.pth'
+
+
+INPUT:
+#  SIZE_TRAIN: [128, 64]
+  SIZE_TRAIN: [256, 128]
+#  SIZE_TRAIN: [360, 180]
+#  SIZE_TRAIN: [288, 144]
+#  SIZE_TEST: [288, 144]
+#  SIZE_TEST: [360, 180]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  PADDING: 10
+
+DATASETS:
+#   NAMES: ('cuhk03')
+#   NAMES: ('dukemtmc')
+  NAMES: ('market1501')
+#   NAMES: ('msmt17')
+DATALOADER:
+  SAMPLER: 'multiple_softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 320
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  IMS_PER_BATCH: 64
+
+  # STEPS: [40, 70]
+  STEPS: [40, 90]
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 40 
+  LOG_PERIOD: 100
+  EVAL_PERIOD: 40 
+
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: '/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth'
+# OUTPUT_DIR: "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/songcy/BNNeck/ChannelSplit6/gcb_ch/market1501"
+OUTPUT_DIR: "/home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/result/market1501/LBNNeck_modify"
+
+2020-10-05 17:19:55,446 reid_baseline INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 32
+  SAMPLER: multiple_softmax_triplet
+DATASETS:
+  NAMES: market1501
+INPUT:
+  PADDING: 10
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  PROB: 0.5
+  SIZE_TEST: [256, 128]
+  SIZE_TRAIN: [256, 128]
+MODEL:
+  DEVICE: cuda
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /export/home/dongshichao/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/SuggerNet/result/market1501/LBNNeck_modify
+SOLVER:
+  BASE_LR: 0.00036
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 40
+  EVAL_PERIOD: 40
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 100
+  MARGIN: 0.2
+  MAX_EPOCHS: 320
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (40, 90)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  IMS_PER_BATCH: 256
+  WEIGHT: /home/dongshichao/Dsc/D_paper/reid_baseline-master/Sugger/2020/LBNNeck_v2-256x128/duke-0.03/resnet50_model_320.pth
+=> Market1501 loaded
+Dataset statistics:
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   751 |    12936 |         6
+  query    |   750 |     3368 |         6
+  gallery  |   751 |    15913 |         6
+  ----------------------------------------
+2020-10-05 17:19:56,601 reid_baseline.train INFO: Start training
+/home/dongshichao/anaconda3/envs/torchreid/lib/python3.7/site-packages/torch/optim/lr_scheduler.py:122: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  "https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate", UserWarning)
+2020-10-05 17:20:31,372 reid_baseline.train INFO: Epoch[1] Iteration[100/186] Loss: 6.884, Acc: 0.045, Base Lr: 3.92e-05
+2020-10-05 17:20:55,330 reid_baseline.train INFO: Epoch 1 done. Time per batch: 53.111[s] Speed: 224.1[samples/s]
+2020-10-05 17:20:55,330 reid_baseline.train INFO: ----------
+2020-10-05 17:21:21,566 reid_baseline.train INFO: Epoch[2] Iteration[100/186] Loss: 5.736, Acc: 0.085, Base Lr: 7.49e-05
+2020-10-05 17:21:46,227 reid_baseline.train INFO: Epoch 2 done. Time per batch: 48.769[s] Speed: 244.1[samples/s]
+2020-10-05 17:21:46,228 reid_baseline.train INFO: ----------
+2020-10-05 17:22:18,998 reid_baseline.train INFO: Epoch[3] Iteration[100/186] Loss: 4.294, Acc: 0.257, Base Lr: 1.11e-04
+2020-10-05 17:22:56,204 reid_baseline.train INFO: Epoch 3 done. Time per batch: 67.768[s] Speed: 175.7[samples/s]
+2020-10-05 17:22:56,204 reid_baseline.train INFO: ----------
+2020-10-05 17:23:42,686 reid_baseline.train INFO: Epoch[4] Iteration[100/186] Loss: 2.992, Acc: 0.450, Base Lr: 1.46e-04
+2020-10-05 17:24:24,707 reid_baseline.train INFO: Epoch 4 done. Time per batch: 86.291[s] Speed: 138.0[samples/s]
+2020-10-05 17:24:24,707 reid_baseline.train INFO: ----------
+2020-10-05 17:25:15,760 reid_baseline.train INFO: Epoch[5] Iteration[100/186] Loss: 2.138, Acc: 0.599, Base Lr: 1.82e-04
+2020-10-05 17:26:00,853 reid_baseline.train INFO: Epoch 5 done. Time per batch: 93.812[s] Speed: 126.9[samples/s]
+2020-10-05 17:26:00,854 reid_baseline.train INFO: ----------
+2020-10-05 17:26:49,582 reid_baseline.train INFO: Epoch[6] Iteration[100/186] Loss: 1.658, Acc: 0.680, Base Lr: 2.17e-04
+2020-10-05 17:27:33,349 reid_baseline.train INFO: Epoch 6 done. Time per batch: 90.072[s] Speed: 132.2[samples/s]
+2020-10-05 17:27:33,350 reid_baseline.train INFO: ----------
+2020-10-05 17:28:21,036 reid_baseline.train INFO: Epoch[7] Iteration[100/186] Loss: 1.191, Acc: 0.775, Base Lr: 2.53e-04
+2020-10-05 17:29:00,928 reid_baseline.train INFO: Epoch 7 done. Time per batch: 85.283[s] Speed: 139.6[samples/s]
+2020-10-05 17:29:00,929 reid_baseline.train INFO: ----------
+2020-10-05 17:29:46,671 reid_baseline.train INFO: Epoch[8] Iteration[100/186] Loss: 1.017, Acc: 0.812, Base Lr: 2.89e-04
+2020-10-05 17:30:25,204 reid_baseline.train INFO: Epoch 8 done. Time per batch: 81.929[s] Speed: 145.3[samples/s]
+2020-10-05 17:30:25,204 reid_baseline.train INFO: ----------
+2020-10-05 17:31:09,604 reid_baseline.train INFO: Epoch[9] Iteration[100/186] Loss: 0.919, Acc: 0.837, Base Lr: 3.24e-04
+2020-10-05 17:31:46,180 reid_baseline.train INFO: Epoch 9 done. Time per batch: 78.757[s] Speed: 151.1[samples/s]
+2020-10-05 17:31:46,181 reid_baseline.train INFO: ----------
+2020-10-05 17:32:30,108 reid_baseline.train INFO: Epoch[10] Iteration[100/186] Loss: 0.794, Acc: 0.855, Base Lr: 3.60e-04
+2020-10-05 17:33:09,344 reid_baseline.train INFO: Epoch 10 done. Time per batch: 80.918[s] Speed: 147.1[samples/s]
+2020-10-05 17:33:09,345 reid_baseline.train INFO: ----------
+2020-10-05 17:33:51,854 reid_baseline.train INFO: Epoch[11] Iteration[100/186] Loss: 0.681, Acc: 0.878, Base Lr: 3.60e-04
+2020-10-05 17:34:28,499 reid_baseline.train INFO: Epoch 11 done. Time per batch: 76.827[s] Speed: 154.9[samples/s]
+2020-10-05 17:34:28,499 reid_baseline.train INFO: ----------
+2020-10-05 17:35:12,027 reid_baseline.train INFO: Epoch[12] Iteration[100/186] Loss: 0.579, Acc: 0.909, Base Lr: 3.60e-04
+2020-10-05 17:35:50,280 reid_baseline.train INFO: Epoch 12 done. Time per batch: 79.466[s] Speed: 149.8[samples/s]
+2020-10-05 17:35:50,281 reid_baseline.train INFO: ----------
+2020-10-05 17:36:33,994 reid_baseline.train INFO: Epoch[13] Iteration[100/186] Loss: 0.499, Acc: 0.929, Base Lr: 3.60e-04
+2020-10-05 17:37:11,705 reid_baseline.train INFO: Epoch 13 done. Time per batch: 79.193[s] Speed: 150.3[samples/s]
+2020-10-05 17:37:11,705 reid_baseline.train INFO: ----------
+2020-10-05 17:37:54,863 reid_baseline.train INFO: Epoch[14] Iteration[100/186] Loss: 0.482, Acc: 0.937, Base Lr: 3.60e-04
